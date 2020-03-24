@@ -22,7 +22,8 @@ module.exports={
     context:path.resolve(__dirname,'src'),   //基础目录，绝对路径，用于从配置中解析入口起点(entry point)和 loader
     mode:"development", // production：生产模式； development：开发模式  
     entry:{      //JavaScript执行入口文件
-        index:'./main.js'        
+        index:'./main.js'
+        
     },
     output:{   
       path:path.resolve(__dirname,'./dist'),   //将输出文件都放到dist目录下 
@@ -245,7 +246,7 @@ module.exports={
                     removeComments: true, // 移除注释
                     collapseBooleanAttributes: true // 省略只有 boolean 值的属性值 例如：readonly checked
             },
-        }),
+        }),        
         new webpack.ProvidePlugin({  //自动加载模块，而不必到处 import 或 require 。
           $: 'jquery',
           jQuery: 'jquery'
