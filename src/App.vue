@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>组件仓库</h1>
+    <h1>vue组件仓库</h1>
   </div>
   
 </template>
