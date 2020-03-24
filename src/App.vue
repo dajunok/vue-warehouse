@@ -9,7 +9,7 @@
 
 export default{
     name:'app',    //模块名称
-    props:{},
+    props:{},      //组件属性
     model: {},
     mixins:[],   //data数据合并混入
     data:function(){
