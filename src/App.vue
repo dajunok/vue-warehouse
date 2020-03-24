@@ -8,7 +8,7 @@
 <script type="text/javascript">
 
 export default{
-    name:'app',
+    name:'app',    //模块名称
     props:{},
     model: {},
     mixins:[],   //data数据合并混入
