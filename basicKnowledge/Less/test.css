@@ -1,7 +1,40 @@
-.list,
-.style {
-  background: #dc143c;
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  width: 20px;
 }
-.style {
-  font-size: 15px;
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  width: 20px;
+}
+.btn:focus,
+.btn:activ:focus,
+.btn.activ:focus,
+.btn.focus,
+.btn:activ.focus,
+.btn.activ.focus {
+  width: 20px;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  width: 20px;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  width: 20px;
 }

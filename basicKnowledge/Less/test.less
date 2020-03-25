@@ -1,11 +1,64 @@
-.list{
-   @rgb:rgb(220,20,60);
-   @red:red(@rgb);
-   @green:green(@rgb);
-   @blue:blue(@rgb);
-   background: rgb(@red,@green,@blue);
+.tab-focus(){
+    width: 20px;
+}
+.btn {
+  &,
+  &:active,
+  &.active {
+    &:focus,
+    &.focus {
+      .tab-focus();
+    }
+  }
 }
 
-.style:extend(.list){
-    font-size: 15px;
+
+
+
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  .tab-focus();
+}
+
+
+
+.btn{
+    &,
+    &:activ,
+    &.activ{
+        &:focus,
+        &.focus{
+            .tab-focus();
+        }
+    }
+}
+
+
+
+.btn{
+    &:focus,
+    &:active:focus,
+    &.active:focus,
+    &.focus,
+    &:active.focus,
+    &.active.focus{
+        .tab-focus();
+    }
+}
+
+
+.btn{
+    &,
+    &:active,
+    &.active{
+        &:focus,
+        &.focus{
+            .tab-focus();
+        }
+    }
 }

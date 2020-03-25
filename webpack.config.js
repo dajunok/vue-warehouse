@@ -246,7 +246,7 @@ module.exports={
                     removeComments: true, // 移除注释
                     collapseBooleanAttributes: true // 省略只有 boolean 值的属性值 例如：readonly checked
             },
-        }),        
+        }),     
         new webpack.ProvidePlugin({  //自动加载模块，而不必到处 import 或 require 。
           $: 'jquery',
           jQuery: 'jquery'
@@ -287,6 +287,11 @@ module.exports={
             {
                 from:__dirname+'/src/assets/monkey.ico',
                 to:__dirname+'/dist/img/monkey.ico', 
+                toType: 'file',           
+            },
+            {
+                from:__dirname+'/public/css-demo.html',
+                to:__dirname+'/dist/css-demo.html', 
                 toType: 'file',           
             },
 
