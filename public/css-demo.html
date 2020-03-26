@@ -38,7 +38,7 @@
       li{
         position: static;
         height: 100%;
-        width: 50px;
+        width: 80px;
         margin: 0 0 0 10px;
         background-color: blue;
         float: left;
@@ -46,21 +46,31 @@
       .dropdown{
         position: static;
         height: 100%;
-        width: 100%;
         background-color: Orange;
       }
-      button{
+      .dropdown-toggle{
         position: static;
         height: 100%;
         width: 100%;
       }
       .dropdown-menu{
-        position: static;
+        position: static;        
         height: 100%;
         width: 100%;
       }
+      .dropdown-menu li{
+        margin: 0;
+      }
+      .caret{
+        width: 0;
+        height: 0;
+        border-width: 6px 6px 0px 6px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+        display: inline-block;
+      }
         
-    </style>      
+    </style>
   </head>
   <body>      
     <div class="header">
@@ -68,7 +78,7 @@
         <li></li>
         <li>
           <div class="dropdown">
-            <button>
+            <button class="dropdown-toggle">
               主题
               <span class="caret"></span>              
             </button>
@@ -87,7 +97,6 @@
       </ul>
     </div>
     <div class="body"></div>
-    <div class="footer"></div>
-
+    <div class="footer"></div>    
   </body>
 </html>
