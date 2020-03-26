@@ -17,24 +17,70 @@
           margin: 0;
           padding: 0;
       }
+      button{
+          border: none;
+          padding: 0;
+          margin: 0;
+          outline-style: none;
+      }
       ul li{list-style:none;}    /*去掉列表前面的项目符号*/
       .header{
-        /*position: relative;*/
+        position: static;
         height: 40px;
         background-color: red;
       }
-      ul{
+      .main{
+        position: static;
         height: 90%;
+        width: 40%;
         background-color: green;
       }
+      li{
+        position: static;
+        height: 100%;
+        width: 50px;
+        margin: 0 0 0 10px;
+        background-color: blue;
+        float: left;
+      }
+      .dropdown{
+        position: static;
+        height: 100%;
+        width: 100%;
+        background-color: Orange;
+      }
+      button{
+        position: static;
+        height: 100%;
+        width: 100%;
+      }
+      .dropdown-menu{
+        position: static;
+        height: 100%;
+        width: 100%;
+      }
         
-    </style>
+    </style>      
   </head>
   <body>      
     <div class="header">
-      <ul>
+      <ul class="main">
         <li></li>
-        <li></li>
+        <li>
+          <div class="dropdown">
+            <button>
+              主题
+              <span class="caret"></span>              
+            </button>
+            <ul class="dropdown-menu">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+          </div>
+        </li>
         <li></li>
         <li></li>
         <li></li>
@@ -42,5 +88,6 @@
     </div>
     <div class="body"></div>
     <div class="footer"></div>
+
   </body>
 </html>
