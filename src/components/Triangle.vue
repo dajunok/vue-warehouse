@@ -1,17 +1,16 @@
 <template>
   <div>
-    <h1>vue组件仓库</h1>
-    <triangle></triangle>  
-
-  </div>  
+    <h1>我是Triangle组件</h1>
+    <div class="diamond"></div>
+  </div>
+  
 </template>
 
 <script type="text/javascript">
-import Triangle from "@/components/Triangle.vue"
 
 export default{
-    name:'app',    //模块名称
-    props:{},      //组件属性
+    name:'triangle',
+    props:{},
     model: {},
     mixins:[],   //data数据合并混入
     data:function(){
@@ -22,9 +21,7 @@ export default{
     computed:{},
     methods:{},
     watch:{},
-    components:{
-        triangle:Triangle,
-    },
+    components:{},
     // 生命周期钩子
     beforeCreate:function(){},
     created:function(){},
@@ -39,6 +36,10 @@ export default{
     errorCaptured:function(){},
 
 }
-
-
 </script>
+
+<style lang="less" scoped>
+  @import  '..//style//triangle.less';
+
+  
+</style>
