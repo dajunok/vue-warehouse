@@ -38,8 +38,7 @@ export default{
 }
 </script>
 
-<style lang="less" scoped>
-  @import  '..//style//triangle.less';
-
+<style scoped lang="less" rel="stylesheet/less"> 
+    @import (less) "../style/triangle.less";
   
 </style>

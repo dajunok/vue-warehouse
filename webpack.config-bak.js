@@ -35,100 +35,23 @@ module.exports={
     },
     module:{
         rules:[
-            {  //配置CSS加载器
-              test: /\.css$/,
-              use: [{
-                      loader: 'style-loader'
-                  },
-                  { loader: "vue-style-loader" },
-                  { 
-                    loader: MiniCssExtractPlugin.loader,  //提取.css文件
-                    options:{
-                        publicPath:'/web/',  //给提取后的目标.css文件中的url路径最前面添加../（解决css文件构建后图片路径url引用错误问题。url路径由加载器url-loader设置决定）
-                    },
-                  },
-                  {
-                      loader: 'css-loader'
-                  },
-                  {
-                      loader: 'postcss-loader',
-                      options: {
-                          sourceMap: true,
-                          config: {
-                              path: 'postcss.config.js'
-                          }
-                      }
-                  }
-              ]
-            },
-            //配置scss加载器
             {
-              test: /\.scss$/,
-              use: [
-                  {
-                      loader: 'style-loader', 
-                  },
-                  { loader: "vue-style-loader" },
-                  { 
-                    loader: MiniCssExtractPlugin.loader,  //提取.css文件
-                    options:{
-                        publicPath:'/web/',  //给提取后的目标.css文件中的url路径最前面添加../（解决css文件构建后图片路径url引用错误问题。url路径由加载器url-loader设置决定）
-                    },
-                  },
-                  {
-                      loader: 'css-loader', 
-                  },
-                  {
-                      loader: 'postcss-loader',
-                      options: {
-                          sourceMap: true,
-                          config: {
-                              path: 'postcss.config.js'
-                          }
-                      }
-                  },
-                  {
-                      loader: 'sass-loader', 
-                      options: { sourceMap: true }
-                  }
-              ],
-              exclude: /node_modules/
-            },
-            //配置Less加载器
-            {
-                test: /\.less$/,
+                test: /\.(css|less|sass|scss)$/,
                 use: [
-                    {
-                        loader: 'style-loader', 
+                  { loader: "vue-style-loader" },
+                  { 
+                    loader: MiniCssExtractPlugin.loader,  //提取.css文件
+                    options:{
+                        publicPath:'/web/',  //给提取后的目标.css文件中的url路径最前面添加../（解决css文件构建后图片路径url引用错误问题。url路径由加载器url-loader设置决定）
                     },
-                    { loader: "vue-style-loader" },
-                    { 
-                      loader: MiniCssExtractPlugin.loader,  //提取.css文件
-                      options:{
-                          publicPath:'/web/',  //给提取后的目标.css文件中的url路径最前面添加../（解决css文件构建后图片路径url引用错误问题。url路径由加载器url-loader设置决定）
-                      },
-                    },
-                    {
-                        loader: 'css-loader', 
-                        options: {
-                            importLoaders: 1,
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true,
-                            config: {
-                                path: 'postcss.config.js'
-                            }
-                        }
-                    },
-                    {
-                        loader: 'less-loader', 
-                        options: { 
-                            sourceMap: true,
-                        }
-                    }
+                  },
+                  { loader: "css-loader" },     // translates CSS into CommonJS
+                  { loader: "postcss-loader" }, // 为css样式自动加入浏览器前缀
+                  { loader: "less-loader" },    // compiles Less to CSS
+                  {
+                    loader: "sass-loader", 
+                    options: {  sourceMap: false },
+                  },
                 ]
             },
             //Vue-Loader是一个webpack的加载器，它允许你以一种名为单文件组件 (SFCs)的格式撰写 Vue 组件
