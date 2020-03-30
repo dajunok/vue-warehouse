@@ -1,7 +1,13 @@
 <template>
   <div>
-    <h1>vue组件仓库</h1>
-    <triangle></triangle>  
+    <div class="navigation">  
+        <div class="top-nav"></div>
+        <div class="maidan"></div>  
+        <div class="base-nav"></div>
+    </div>
+
+
+    
 
   </div>  
 </template>
@@ -45,5 +51,6 @@ export default{
 
 
 <style scoped lang="less" rel="stylesheet/less"> 
+
   
 </style>
