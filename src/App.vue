@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div class="navigation">  
-        <div class="top-nav"></div>
-        <div class="maidan"></div>  
-        <div class="base-nav"></div>
+    <div class="nav-wrap">  
+        <div class="top-maidan">
+            <div class="logo">
+                <a href="http://vue-warehouse.com:8080/web/css-demo.html"></a>
+            </div>            
+        </div>  
+        <div class="navigation"></div>
     </div>
 
 
@@ -51,6 +54,23 @@ export default{
 
 
 <style scoped lang="less" rel="stylesheet/less"> 
+@import (reference) "./style/color.less";
+.top-maidan{
+    height: 124px;
+    background-image: url('./assets/starsky.png');    
+    background-repeat:no-repeat;
+    background-size:cover;
+    .logo{  
+        position:relative;
+        left: 50%;
+        width: 150px;
+        height: 100%;
+        background-image: url('./assets/mylog.png');    
+        background-repeat:no-repeat;
+        background-size:cover;
+        transform: translateX(-50%);
+    }
+}
 
   
 </style>
