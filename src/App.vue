@@ -4,31 +4,31 @@
         <div class="navigation">
             <ul class="main">
                 <li>
-                    <a href="http://vue-warehouse.com:8080/web">首页</a>
+                    <a href="http://vue-warehouse.com:8080/web" target="_blank">首页</a>
                 </li>
                 <li>
-                    <a href="#">HTML</a>
+                    <a href="https://www.w3cschool.cn/htmltags/" target="_blank">HTML</a>
                 </li>
                 <li>
-                    <a href="#">CSS</a>
+                    <a href="https://www.w3cschool.cn/cssref/" target="_blank">CSS</a>
                 </li>
                 <li>
-                    <a href="#">LESS</a>
+                    <a href="https://www.w3cschool.cn/less/" target="_blank">LESS</a>
                 </li>
                 <li>
-                    <a href="#">SASS</a>
+                    <a href="https://www.runoob.com/sass/sass-tutorial.html" target="_blank">SASS</a>
                 </li>
                 <li>
-                    <a href="#">JAVASCRIPT</a>
+                    <a href="https://www.w3school.com.cn/js/index.asp" target="_blank">JavaScript</a>
                 </li>
                 <li>
-                    <a href="#">JQUERY</a>
+                    <a href="https://www.w3school.com.cn/jquery/jquery_reference.asp" target="_blank">JQuery</a>
                 </li>
                 <li>
-                    <a href="#">Vue</a>
+                    <a href="https://cn.vuejs.org/" target="_blank">Vue</a>
                 </li>
                 <li>
-                    <a href="#">Bootstrap</a>
+                    <a href="https://www.runoob.com/bootstrap/bootstrap-tutorial.html" target="_blank">Bootstrap</a>
                 </li>                
                 <li>
                     <div class="dropdown">
@@ -133,7 +133,8 @@ export default{
 
 <style scoped lang="less" rel="stylesheet/less">
 
-@import (reference) "./style/color.less";
+@import (reference) "./style/color.less";     //常用颜色
+@import (reference) "./style/triangle.less";  //三角符号
 
 .font(@size,@bold,@lh){  //定义字体mixin
     font-style:normal;
@@ -143,45 +144,59 @@ export default{
     line-height:@lh;     //规定字体行高
     font-family:"Microsoft yahei", arial, Simsun, sans-serif;  //规定字体系列。
 }
-
 .bakimg(@url){ //定义背景图片mixin函数
     background-image: @url;    
     background-repeat:no-repeat;
     background-size:cover;
 }
+.nav-wrap{
+  .navigation{    //导航栏菜单
+      height:40px;
+      .font(@bold:normal,@size:14px,@lh:40px);
+      background-color:#f2f2f2;   //d9d9d9  e5e5e5   f2f2f2   #4c8eff 
+      .main{
+          height: 100%;
+          width: 100%;
+          color:@White;
+          &>li{
+              height: 100%;
+              width: auto;
+              margin: 0 0 0 30px;
+              float: left;              
+              a,.dropdown-toggle{
+                color:@DarkGray;
+                .caret{
+                  .triangle-common-down(@size:4px,@color:@DarkGray);
+                  display: inline-block;
+                }
+              }
+              &>a:hover,.dropdown-toggle:hover{ 
+                color:@Black;
+                .caret{
+                  .triangle-common-up(@size:4px,@color:@DarkGray);
+                }
+              }              
+          }
+      }
+  }
+  .top-maidan{ //顶部广场
+      height: 124px;
+      .bakimg(@url:url('./assets/starsky.png'));   //设置背景图片
+      .logo{  
+          display:inline-block;
+          position:relative;
+          left: 50%;
+          width: 150px;
+          height: 100%;
+          .bakimg(@url:url('./assets/mylog.png'));  //设置背景图片
+          transform: translateX(-50%);    //水平居中
+          text-indent: -999px;            //隐藏a标签的HTML文本
+      }
+  }
+
+}
 
 
-.top-maidan{ //顶部广场
-    height: 124px;
-    .bakimg(@url:url('./assets/starsky.png'));   //设置背景图片
-    .logo{  
-        display:inline-block;
-        position:relative;
-        left: 50%;
-        width: 150px;
-        height: 100%;
-        .bakimg(@url:url('./assets/mylog.png'));  //设置背景图片
-        transform: translateX(-50%);    //水平居中
-        text-indent: -999px;            //隐藏a标签的HTML文本
-    }
-}
-.navigation{    //导航栏
-    height:40px;
-    .font(@bold:normal,@size:14px,@lh:40px);
-    background-color:#f2f2f2;   //d9d9d9  e5e5e5   f2f2f2   #4c8eff 
-    .main{
-        height: 100%;
-        width: 100%;
-        color:@White;
-        &>li{
-            height: 100%;
-            width: auto;
-            margin: 0 0 0 30px;
-            float: left;
-            &>a{color:@DarkGray;}
-        }
-    }
-}
 
   
 </style>

@@ -17,15 +17,15 @@
 
 
 //2、绘制普通三角形
-.triangle-common-up {     //普通三角形-朝上
+.triangle-common-up(@size:4px,@color:red) {     //普通三角形-朝上
     .fixed-property();
-    border-width: 0 40px 40px;    
-    border-color: transparent transparent red;
+    border-width: 0 @size @size;    
+    border-color: transparent transparent @color;
 }
-.triangle-common-down {     //普通三角形-朝下
+.triangle-common-down(@size:4px,@color:orange) {     //普通三角形-朝下
     .fixed-property();
-    border-width: 40px 40px 0px 40px;
-    border-color: orange transparent transparent transparent;
+    border-width: @size @size 0px @size;
+    border-color: @color transparent transparent transparent;
 }
 .triangle-common-left {     //普通三角形-朝左
     .fixed-property();

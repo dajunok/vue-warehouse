@@ -8,20 +8,6 @@
   border: 40px solid;
   border-color: orange blue red green;
 }
-.triangle-common-up {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 40px 40px;
-  border-color: transparent transparent red;
-}
-.triangle-common-down {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 40px 40px 0px 40px;
-  border-color: orange transparent transparent transparent;
-}
 .triangle-common-left {
   width: 0;
   height: 0;
