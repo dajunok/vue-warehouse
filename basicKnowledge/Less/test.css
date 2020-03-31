@@ -1,40 +1,10 @@
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-  width: 20px;
-}
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-  width: 20px;
-}
-.btn:focus,
-.btn:activ:focus,
-.btn.activ:focus,
-.btn.focus,
-.btn:activ.focus,
-.btn.activ.focus {
-  width: 20px;
-}
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-  width: 20px;
-}
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-  width: 20px;
+.navigation {
+  height: 40px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 1.5;
+  font-family: "Microsoft yahei", arial, Simsun, sans-serif;
+  background-color: #f2f2f2;
 }

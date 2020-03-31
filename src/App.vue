@@ -1,12 +1,91 @@
 <template>
   <div>
-    <div class="nav-wrap">  
+    <div class="nav-wrap">           
+        <div class="navigation">
+            <ul class="main">
+                <li>
+                    <a href="http://vue-warehouse.com:8080/web">首页</a>
+                </li>
+                <li>
+                    <a href="#">HTML</a>
+                </li>
+                <li>
+                    <a href="#">CSS</a>
+                </li>
+                <li>
+                    <a href="#">LESS</a>
+                </li>
+                <li>
+                    <a href="#">SASS</a>
+                </li>
+                <li>
+                    <a href="#">JAVASCRIPT</a>
+                </li>
+                <li>
+                    <a href="#">JQUERY</a>
+                </li>
+                <li>
+                    <a href="#">Vue</a>
+                </li>
+                <li>
+                    <a href="#">Bootstrap</a>
+                </li>                
+                <li>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">
+                          Web服务器
+                          <span class="caret"></span>              
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="#" >Tomcat</a>
+                          </li>
+                          <li>
+                            <a href="#">Jboss</a>
+                          </li>
+                          <li>
+                              <a href="#">Nginx</a>
+                          </li>
+                          <li>
+                              <a href="#">Apache</a>
+                          </li>
+                          <li>
+                              <a href="#">IIS</a>
+                          </li>
+                          <li>
+                              <a href="#">Jetty</a>
+                          </li>
+                          <li>
+                              <a href="#">WebSphere</a>
+                          </li>
+                          <li>
+                              <a href="#">WebLogic</a>
+                          </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">
+                          工具类
+                          <span class="caret"></span>              
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="#">Git</a>
+                          </li>
+                          <li>
+                            <a href="#">Webpack</a>
+                          </li>
+                        </ul>
+                    </div>
+                </li>
+                <li></li>
+            </ul>
+        </div>
         <div class="top-maidan">
-            <div class="logo">
-                <a href="http://vue-warehouse.com:8080/web/css-demo.html"></a>
-            </div>            
-        </div>  
-        <div class="navigation"></div>
+            <a class="logo" href="http://vue-warehouse.com:8080/web/css-demo.html" target="_blank">logo</a>         
+        </div> 
     </div>
 
 
@@ -16,7 +95,6 @@
 </template>
 
 <script type="text/javascript">
-import Triangle from "@/components/Triangle.vue"
 
 export default{
     name:'app',    //模块名称
@@ -32,7 +110,7 @@ export default{
     methods:{},
     watch:{},
     components:{
-        triangle:Triangle,
+        //triangle:Triangle,
     },
     // 生命周期钩子
     beforeCreate:function(){},
@@ -53,22 +131,55 @@ export default{
 </script>
 
 
-<style scoped lang="less" rel="stylesheet/less"> 
+<style scoped lang="less" rel="stylesheet/less">
+
 @import (reference) "./style/color.less";
-.top-maidan{
-    height: 124px;
-    background-image: url('./assets/starsky.png');    
+
+.font(@size,@bold,@lh){  //定义字体mixin
+    font-style:normal;
+    font-variant:normal;
+    font-weight:@bold;   //设置字体粗细
+    font-size:@size;     //规定字体尺寸
+    line-height:@lh;     //规定字体行高
+    font-family:"Microsoft yahei", arial, Simsun, sans-serif;  //规定字体系列。
+}
+
+.bakimg(@url){ //定义背景图片mixin函数
+    background-image: @url;    
     background-repeat:no-repeat;
     background-size:cover;
+}
+
+
+.top-maidan{ //顶部广场
+    height: 124px;
+    .bakimg(@url:url('./assets/starsky.png'));   //设置背景图片
     .logo{  
+        display:inline-block;
         position:relative;
         left: 50%;
         width: 150px;
         height: 100%;
-        background-image: url('./assets/mylog.png');    
-        background-repeat:no-repeat;
-        background-size:cover;
-        transform: translateX(-50%);
+        .bakimg(@url:url('./assets/mylog.png'));  //设置背景图片
+        transform: translateX(-50%);    //水平居中
+        text-indent: -999px;            //隐藏a标签的HTML文本
+    }
+}
+.navigation{    //导航栏
+    height:40px;
+    .font(@bold:normal,@size:14px,@lh:40px);
+    background-color:#f2f2f2;   //d9d9d9  e5e5e5   f2f2f2   #4c8eff 
+    .main{
+        height: 100%;
+        width: 100%;
+        color:@White;
+        &>li{
+            height: 100%;
+            width: auto;
+            margin: 0 0 0 30px;
+            float: left;
+            &>a{color:@DarkGray;}
+        }
     }
 }
 
