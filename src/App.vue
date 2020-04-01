@@ -25,8 +25,11 @@
                     <a href="https://www.w3school.com.cn/jquery/jquery_reference.asp" target="_blank">JQuery</a>
                 </li>
                 <li>
-                    <a href="https://cn.vuejs.org/" target="_blank">Vue</a>
+                    <a href="https://www.lodashjs.com/" target="_blank">Lodash</a>
                 </li>
+                <li>
+                    <a href="https://cn.vuejs.org/" target="_blank">Vue</a>
+                </li>                
                 <li>
                     <a href="https://www.runoob.com/bootstrap/bootstrap-tutorial.html" target="_blank">Bootstrap</a>
                 </li>                
@@ -136,7 +139,7 @@ export default{
 @import (reference) "./style/color.less";     //常用颜色
 @import (reference) "./style/triangle.less";  //三角符号
 
-.font(@size,@bold,@lh){  //定义字体mixin
+.font(@size,@bold,@lh){  //定义字体mixin函数
     font-style:normal;
     font-variant:normal;
     font-weight:@bold;   //设置字体粗细
@@ -149,33 +152,59 @@ export default{
     background-repeat:no-repeat;
     background-size:cover;
 }
+.border(@width:1px,@style:solid,@color:Black){  //定义边框mixin函数
+  border-width:@width;
+  border-style:@style;
+  border-color:@color;
+}
+
+//通过以下变量值的改变，来实现不同款式的导航栏。
+
+
+
 .nav-wrap{
   .navigation{    //导航栏菜单
       height:40px;
       .font(@bold:normal,@size:14px,@lh:40px);
-      background-color:#f2f2f2;   //d9d9d9  e5e5e5   f2f2f2   #4c8eff 
+      &,.dropdown-toggle{background-color:#f2f2f2;}   //d9d9d9  e5e5e5   f2f2f2   #4c8eff 
       .main{
+          position:relative;
           height: 100%;
           width: 100%;
-          color:@White;
+          z-index:10;
           &>li{
               height: 100%;
               width: auto;
-              margin: 0 0 0 30px;
-              float: left;              
-              a,.dropdown-toggle{
-                color:@DarkGray;
+              margin: 0 0 0 20px;              
+              float: left;
+              padding:0px 5px;                   
+              a,.dropdown-toggle{                
+                color:DarkGray;
                 .caret{
-                  .triangle-common-down(@size:4px,@color:@DarkGray);
+                  .triangle-common-down(@size:4px,@color:DarkGray); //三角形朝下
                   display: inline-block;
                 }
-              }
-              &>a:hover,.dropdown-toggle:hover{ 
-                color:@Black;
+              }        
+              .dropdown-menu{display:none; }
+              &:hover{                  
+                .dropdown{position:relative;}
+                .dropdown-menu{
+                  display:block;
+                  position:absolute;
+                  .font(@bold:normal,@size:14px,@lh:30px);
+                  .border(@width:0 1px 1px 1px,@style:solid,@color:#f2f2f2);   //鼠标移入时给下拉菜单框增加边框线                 
+                  left:-5px;
+                  li{.border(@width:0 5px,@style:solid,@color:White);}
+                  li:hover{
+                    border-color:#f2f2f2;
+                    background-color:#f2f2f2;
+                  }
+                }                
+                &,.dropdown-toggle,.dropdown-menu{background-color:White;}
                 .caret{
-                  .triangle-common-up(@size:4px,@color:@DarkGray);
-                }
-              }              
+                  .triangle-common-up(@size:4px,@color:DarkGray);  //三角形朝上
+                }                
+              }          
           }
       }
   }
