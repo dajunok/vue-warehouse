@@ -4,100 +4,35 @@
         <div class="navigation">
             <ul class="main">
                 <li>
-                    <a href="http://vue-warehouse.com:8080/web" target="_blank">首页</a>
+                    <a href="http://vue-warehouse.com:8080/web" target="_self">首页</a>
                 </li>
-                <li>
-                    <a href="https://www.w3cschool.cn/htmltags/" target="_blank">HTML</a>
-                </li>
-                <li>
-                    <a href="https://www.w3cschool.cn/cssref/" target="_blank">CSS</a>
-                </li>
-                <li>
-                    <a href="https://www.w3cschool.cn/less/" target="_blank">LESS</a>
-                </li>
-                <li>
-                    <a href="https://www.runoob.com/sass/sass-tutorial.html" target="_blank">SASS</a>
-                </li>
-                <li>
-                    <a href="https://www.w3school.com.cn/js/index.asp" target="_blank">JavaScript</a>
-                </li>
-                <li>
-                    <a href="https://www.w3school.com.cn/jquery/jquery_reference.asp" target="_blank">JQuery</a>
-                </li>
-                <li>
-                    <a href="https://www.lodashjs.com/" target="_blank">Lodash</a>
-                </li>
-                <li>
-                    <a href="https://cn.vuejs.org/" target="_blank">Vue</a>
-                </li>                
-                <li>
-                    <a href="https://www.runoob.com/bootstrap/bootstrap-tutorial.html" target="_blank">Bootstrap</a>
-                </li>                
-                <li>
+                <li v-for="item in nav_list">
+                    <a :href="item.href" target="_blank">{{item.name}}</a>
+                </li>                              
+                <li v-for="item of dropdwon_menu">
                     <div class="dropdown">
                         <button class="dropdown-toggle">
-                          Web服务器
+                          {{item.name}}
                           <span class="caret"></span>              
                         </button>
                         <ul class="dropdown-menu">
-                          <li>
-                            <a href="#" >Tomcat</a>
-                          </li>
-                          <li>
-                            <a href="#">Jboss</a>
-                          </li>
-                          <li>
-                              <a href="#">Nginx</a>
-                          </li>
-                          <li>
-                              <a href="#">Apache</a>
-                          </li>
-                          <li>
-                              <a href="#">IIS</a>
-                          </li>
-                          <li>
-                              <a href="#">Jetty</a>
-                          </li>
-                          <li>
-                              <a href="#">WebSphere</a>
-                          </li>
-                          <li>
-                              <a href="#">WebLogic</a>
+                          <li v-for="menu of item.menulist">
+                            <a href="#" >{{menu}}</a>
                           </li>
                         </ul>
                     </div>
                 </li>
-                <li>
-                    <div class="dropdown">
-                        <button class="dropdown-toggle">
-                          工具类
-                          <span class="caret"></span>              
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li>
-                            <a href="#">Git</a>
-                          </li>
-                          <li>
-                            <a href="#">Webpack</a>
-                          </li>
-                        </ul>
-                    </div>
-                </li>
-                <li></li>
             </ul>
         </div>
         <div class="top-maidan">
             <a class="logo" href="http://vue-warehouse.com:8080/web/css-demo.html" target="_blank">logo</a>         
         </div> 
-    </div>
-
-
-    
+    </div>   
 
   </div>  
 </template>
 
-<script type="text/javascript">
+<script type="text/javascript">    
 
 export default{
     name:'app',    //模块名称
@@ -106,7 +41,21 @@ export default{
     mixins:[],   //data数据合并混入
     data:function(){
       return { 
-        
+        nav_list:[  //导航栏列表
+            {name:'HTML',href:'https://www.w3cschool.cn/htmltags/'},
+            {name:'CSS',href:'https://www.w3cschool.cn/cssref/'},
+            {name:'Less',href:'https://www.w3cschool.cn/less/'},
+            {name:'Sass',href:'https://www.runoob.com/sass/sass-tutorial.html'},
+            {name:'JavaScript',href:'https://www.w3school.com.cn/js/index.asp'},
+            {name:'JQuery',href:'https://www.w3school.com.cn/jquery/jquery_reference.asp'},
+            {name:'Lodash',href:'https://www.lodashjs.com/'},
+            {name:'Vue',href:'https://cn.vuejs.org/'},
+            {name:'Bootstrap',href:'https://www.runoob.com/bootstrap/bootstrap-tutorial.html'},
+        ],
+        dropdwon_menu:[  //导航栏中带下拉菜单的列表项
+          {name:'Web服务器',menulist:['Tomcat','Jboss','Nginx','Apache','IIS','Jetty','WebSphere','WebLogic']},
+          {name:'工具类',menulist:['Git','Webpack']}
+        ],
       }; 
     },
     computed:{},
@@ -129,8 +78,6 @@ export default{
     errorCaptured:function(){},
 
 }
-
-
 </script>
 
 
@@ -159,8 +106,6 @@ export default{
 }
 
 //通过以下变量值的改变，来实现不同款式的导航栏。
-
-
 
 .nav-wrap{
   .navigation{    //导航栏菜单
