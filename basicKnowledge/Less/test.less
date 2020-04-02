@@ -1,14 +1,5 @@
-.font(@size,@bold){
-    font-style:normal;
-    font-variant:normal;
-    font-weight:@bold;          //设置字体粗细
-    font-size:@size;
-    line-height:1.5;     //规定字体尺寸和行高
-    font-family:"Microsoft yahei", arial, Simsun, sans-serif;  //规定字体系列。
-}
 
-.navigation{    
-    height:40px;
-    .font(@bold:bold,@size:15px);
-    background-color:#f2f2f2;   //d9d9d9  e5e5e5   f2f2f2
+@a:calc(100%);
+.mixin (@a) when (@a > 1600px){
+color:red;
 }
