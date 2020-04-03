@@ -31,9 +31,7 @@
     <!-- 存放主体内容 -->  
     <div class="body">
       <div class="container">
-        <div class="leftpanel">左侧</div>
-        <div class="middlepanel">中间</div>
-        <div class="rightpanel">右侧</div>
+        <left-menu-panel></left-menu-panel>
       </div>     
     </div>
     <!-- 存放页面底部内容 -->
@@ -44,6 +42,7 @@
 </template>
 
 <script type="text/javascript">    
+import LeftMenuPanel from "./components/index/leftmenu.vue";
 
 export default{
     name:'app',    //模块名称
@@ -73,7 +72,7 @@ export default{
     methods:{},
     watch:{},
     components:{
-        //triangle:Triangle,
+        'left-menu-panel':LeftMenuPanel,
     },
     // 生命周期钩子
     beforeCreate:function(){},
@@ -115,10 +114,6 @@ export default{
   border-style:@style;
   border-color:@color;
 }
-
-
-
-
 
 
 
@@ -209,29 +204,7 @@ export default{
     height:500px;
     transform: translateX(-50%);    //水平居中  
     //display:flex; 
-    background-color:red;
-     
-    .leftpanel{
-      width: auto;
-      margin: 0 0 0 20px;              
-      float: left;
-      height:50px;
-      background-color:LightGreen;
-    }
-    .middlepanel{
-      width: auto;
-      margin: 0 0 0 20px;              
-      float: left;
-      height:60px;
-      background-color:Orange;      
-    }
-    .rightpanel{
-      width: auto;
-      margin: 0 0 0 20px;              
-      float: left;
-      height:80px;
-      background-color:Cyan;
-    }
+    background-color:LightGreen;    
   }
 
 }
