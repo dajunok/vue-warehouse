@@ -116,6 +116,12 @@ export default{
   border-color:@color;
 }
 
+
+
+
+
+
+
 //通过以下变量值的改变，来实现不同款式的导航栏。
 //==============================================head================================================
 .nav-wrap{
@@ -145,7 +151,8 @@ export default{
           position:relative;
           height: 100%;
           width:95%;
-          max-width: 1200px;
+          @media screen and (min-width:1440px) and (max-width: 1680px){width:85%}  //如果屏宽度大于等于1440像素且小于等于1680像素
+          max-width: 1920px;
           min-width: 1000px;
           left:50%;
           transform: translateX(-50%);    //水平居中
@@ -155,7 +162,7 @@ export default{
               width: auto;
               margin: 0 0 0 20px;              
               float: left;
-              //display: inline-block;
+              display: inline-block;
               padding:0px 5px;                   
               a,.dropdown-toggle{                
                 color:DarkGray;
@@ -189,17 +196,20 @@ export default{
   } 
 }
 //==============================================body================================================
-//14"笔记本电脑：1920px X 1080px
+//14"HD笔记本电脑：1920px X 1080px
 .body{  
   min-width:1000px;
   .container{
     position:relative;
     width:95%;
-    max-width: 1200px;
+    @media screen and (min-width:1440px) and (max-width: 1680px){width:85%}  //如果屏宽度大于等于1440像素且小于等于1680像素
+    max-width: 1920px;
     min-width: 1000px;
     left:50%;
+    height:500px;
     transform: translateX(-50%);    //水平居中  
     //display:flex; 
+    background-color:red;
      
     .leftpanel{
       width: auto;
@@ -213,12 +223,7 @@ export default{
       margin: 0 0 0 20px;              
       float: left;
       height:60px;
-      background-color:Orange;
-      @media screen and (max-width: 600px) { //自适应屏幕大小变换
-          & {
-              background-color:red;
-          }
-      }
+      background-color:Orange;      
     }
     .rightpanel{
       width: auto;
@@ -230,7 +235,6 @@ export default{
   }
 
 }
-
 
   
 </style>
