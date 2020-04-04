@@ -32,19 +32,22 @@
     <div class="body">
       <div class="container">
         <div class="sidebar-left">
-          <button>Dasheng <span>博客</span></button>
-          <ul class="vertical">
-              <li class="title">Dasheng <span>CSS</span></li>
-              <li v-for='item in csslist' @click="open(item)">Dasheng {{item.name}}</li>
-              <li class="title">Dasheng <span>布局组件</span></li>
-              <li v-for='item in layoutlist' @click="open(item)">Dasheng {{item.name}}</li>
-              <li class="title">Dasheng <span>插件</span></li>
-              <li v-for='item in pluglist' @click="open(item)">Dasheng {{item.name}}</li>
-              <li class="title">Dasheng <span>其他</span></li>
-              <li v-for='item in otherlist' @click="open(item)">Dasheng {{item.name}}</li>
+          <div class="catalog">
+            <i>Dasheng 博客</i>
+            <span :class="['caret',isnight ? 'night':'']" :title="model" @click="nightmodel()"></span>  <!-- {night:isnight} -->
+          </div>
+          <ul class="menu-v">
+              <li class="title">Dasheng <i>CSS</i></li>
+              <li class="menu-term" v-for='item in csslist' @click="open(item)">Dasheng {{item.name}}</li>
+              <li class="title">Dasheng <i>布局组件</i></li>
+              <li class="menu-term" v-for='item in layoutlist' @click="open(item)">Dasheng {{item.name}}</li>
+              <li class="title">Dasheng <i>插件</i></li>
+              <li class="menu-term" v-for='item in pluglist' @click="open(item)">Dasheng {{item.name}}</li>
+              <li class="title">Dasheng <i>其他</i></li>
+              <li class="menu-term" v-for='item in otherlist' @click="open(item)">Dasheng {{item.name}}</li>
           </ul>
         </div>
-        <div class="middle-panel"></div>
+        <div :class="['middle-panel', isnight ? 'switch':'']"></div>  <!-- switch 用于白天/黑夜背景切换 -->
         <div class="sidebar-right"></div>
       </div>     
     </div>
@@ -138,12 +141,25 @@ export default{
             {id:'049',name:'可视化布局'},
             {id:'050',name:'Less教程'},
         ],
+        //白天夜间页面颜色切换
+        isnight:false,  
+        model:'夜间模式',  //鼠标移入时提示信息
       }; 
     },
-    computed:{},
+    computed:{    
+    },
     methods:{
       open(item){
         alert('Dasheng '+item.name);
+      },
+      nightmodel(){
+        if(this.isnight==false){
+          this.isnight=true;
+          this.model='日间模式';
+        }else{
+          this.isnight=false;
+          this.model='夜间模式';
+        }        
       },
     },
     watch:{},
@@ -186,10 +202,18 @@ export default{
     background-repeat:no-repeat;
     background-size:cover;
 }
-.border(@width:1px,@style:solid,@color:Black){  //定义边框mixin函数
+.bakicon(@url,@repeat:no-repeat,@position:right center,@origin:content-box,@size:20px 20px){    //定义背景图标mixin函数
+    background-image: @url;   //指定图标路径
+    background-repeat:@repeat; //指定背景图标的重复方式，no-repeat为不重复。
+    background-position:@position;  //设置背景图像的起始位置
+    background-origin:@origin;  //指定background-position属性的相对位置。例如padding-box是相对内边距位置。
+    background-size:@size;  //指定背景图像的大小
+}
+.border(@width:1px,@style:solid,@color:Black,@radius:0){  //定义边框mixin函数
   border-width:@width;
   border-style:@style;
   border-color:@color;
+  border-radius:@radius;  //边框圆角
 }
 
 
@@ -273,6 +297,7 @@ export default{
   min-width:1000px;
   .container{
     position:relative;
+    top:20px;
     width:95%;
     @media screen and (min-width:1440px) and (max-width: 1680px){width:85%}  //如果屏宽度大于等于1440像素且小于等于1680像素
     max-width: 1920px;
@@ -286,21 +311,78 @@ export default{
     .sidebar-left{//左侧栏
       width: 15%;
       height: 200px;
-      background-color: Pink;
+      //background-color: LightGreen;
       float: left;
-      .
+      
+      .catalog{
+        position: relative;
+        width: 90%;        
+        height: 30px;
+        line-height:30px; 
+        padding:0 5px;
+        color: Red;
+        .font(@bold:bold,@size:13px,@lh:25px);
+        .border(@width:1px,@style:solid,@color:Gold,@radius:5px 5px 0 0);        
+        background-color: Gold;
+        i{
+          height: 30px;
+          line-height:30px;
+        }
+        .caret{ 
+          position:relative;
+          top: 50%;
+          width: 20px;
+          height: 20px; 
+          float: right;
+          transform: translateY(-50%); 
+          //白天模式背景 
+          .bakimg(@url:url('./assets/night-gray.png'));  //设置背景图片
+          &:hover{.bakimg(@url:url('./assets/night-green.png'));cursor: pointer; }//设置背景图片
+        }
+        .night{ //夜间模式背景
+          .bakimg(@url:url('./assets/day-gray.png'));  //设置背景图片
+          &:hover{.bakimg(@url:url('./assets/day-green.png'));cursor: pointer; }//设置背景图片
+        }               
+      }
+      .menu-v{
+        width:90%; 
+        padding:0 5px;
+        color: #4c4a4a; 
+        .border(@width:1px,@style:solid,@color:Gold,@radius:0);                
+        .title{        
+          height: 40px;
+          .font(@bold:bold,@size:14px,@lh:50px);
+          i{color: Pink}
+        }
+        .menu-term{
+          width: 100%;
+          height: 25px;
+          .border(@width:0.2px,@style:solid,@color:#f3eabc,@radius:0);
+          background-color: #f4edc9;
+          &:hover{
+            .font(@bold:bold,@size:12px,@lh:25px);
+            color: #4c4a4a;
+            background-color: #f7f4e1;
+            cursor: pointer;
+          }
+        } 
+      } 
     } 
     .middle-panel{  //中间面板
       width: 70%;
       height: 200px;
-      background-color: Gray;
+      background-color: Pink;
       float: left;
+    }
+    .switch{  //白天夜间背景颜色切换
+      background-color: Gray;
     }
     .sidebar-right{//右侧栏
       width: 15%;
       height: 200px;
       background-color: LightGreen;
       float: left;
+
     }
   }
 
