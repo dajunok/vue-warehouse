@@ -38,13 +38,13 @@
           </div>
           <ul class="menu-v">
               <li class="title">Dasheng <i>CSS</i></li>
-              <li class="menu-term" v-for='item in csslist' @click="open(item)">Dasheng {{item.name}}</li>
+              <li class="menu-term" tabindex="1" v-for='item in csslist' @click="open(item)">Dasheng {{item.name}}</li>
               <li class="title">Dasheng <i>布局组件</i></li>
-              <li class="menu-term" v-for='item in layoutlist' @click="open(item)">Dasheng {{item.name}}</li>
+              <li class="menu-term" tabindex="1" v-for='item in layoutlist' @click="open(item)">Dasheng {{item.name}}</li>
               <li class="title">Dasheng <i>插件</i></li>
-              <li class="menu-term" v-for='item in pluglist' @click="open(item)">Dasheng {{item.name}}</li>
+              <li class="menu-term" tabindex="1" v-for='item in pluglist' @click="open(item)">Dasheng {{item.name}}</li>
               <li class="title">Dasheng <i>其他</i></li>
-              <li class="menu-term" v-for='item in otherlist' @click="open(item)">Dasheng {{item.name}}</li>
+              <li class="menu-term" tabindex="1" v-for='item in otherlist' @click="open(item)">Dasheng {{item.name}}</li>
           </ul>
         </div>
         <div :class="['middle-panel', isnight ? 'switch':'']"></div>  <!-- switch 用于白天/黑夜背景切换 -->
@@ -150,7 +150,7 @@ export default{
     },
     methods:{
       open(item){
-        alert('Dasheng '+item.name);
+        //alert('Dasheng '+item.name);
       },
       nightmodel(){
         if(this.isnight==false){
@@ -298,7 +298,7 @@ export default{
   .container{
     position:relative;
     top:20px;
-    width:95%;
+    width:97%;
     @media screen and (min-width:1440px) and (max-width: 1680px){width:85%}  //如果屏宽度大于等于1440像素且小于等于1680像素
     max-width: 1920px;
     min-width: 1000px;
@@ -313,13 +313,14 @@ export default{
       height: 200px;
       //background-color: LightGreen;
       float: left;
-      
+      margin-right: 15px;
       .catalog{
         position: relative;
-        width: 90%;        
+        width: 100%;        
         height: 30px;
         line-height:30px; 
         padding:0 5px;
+        box-sizing: border-box;  //解决width100%，加边距导致的溢出问题（即内、外边距无效问题）。
         color: Red;
         .font(@bold:bold,@size:13px,@lh:25px);
         .border(@width:1px,@style:solid,@color:Gold,@radius:5px 5px 0 0);        
@@ -334,7 +335,7 @@ export default{
           width: 20px;
           height: 20px; 
           float: right;
-          transform: translateY(-50%); 
+          transform: translateY(-50%); //垂直居中
           //白天模式背景 
           .bakimg(@url:url('./assets/night-gray.png'));  //设置背景图片
           &:hover{.bakimg(@url:url('./assets/night-green.png'));cursor: pointer; }//设置背景图片
@@ -345,8 +346,9 @@ export default{
         }               
       }
       .menu-v{
-        width:90%; 
+        width:100%; 
         padding:0 5px;
+        box-sizing: border-box;  //解决width100%，加边距导致的溢出问题（即内、外边距无效问题）。
         color: #4c4a4a; 
         .border(@width:1px,@style:solid,@color:Gold,@radius:0);                
         .title{        
@@ -357,6 +359,8 @@ export default{
         .menu-term{
           width: 100%;
           height: 25px;
+          padding-left: 5px;
+          box-sizing: border-box;  //解决width100%，加边距导致的溢出问题（即内、外边距无效问题）。
           .border(@width:0.2px,@style:solid,@color:#f3eabc,@radius:0);
           background-color: #f4edc9;
           &:hover{
@@ -365,11 +369,18 @@ export default{
             background-color: #f7f4e1;
             cursor: pointer;
           }
+          &:focus{
+            .font(@bold:bold,@size:12px,@lh:25px);
+            color: White;
+            background-color: #d974f2;
+            .border(@width:0,@style:solid,@color:#d974f2,@radius:0);
+            outline:0px; //去掉默认蓝色边框线问题
+          }
         } 
       } 
     } 
     .middle-panel{  //中间面板
-      width: 70%;
+      width: 65%;
       height: 200px;
       background-color: Pink;
       float: left;

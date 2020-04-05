@@ -18,3 +18,7 @@ ul li{list-style:none;}    /*去掉列表前面的项目符号*/
 i { font-style:normal}
 
 a {   text-decoration: none; }  /* text-decoration 属性规定添加到文本的修饰。*/
+
+input,button,a {
+    outline:0 none !important; blr:expression(this.onFocus=this.blur());
+}
