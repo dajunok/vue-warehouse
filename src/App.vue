@@ -47,7 +47,9 @@
               <li class="menu-term" tabindex="1" v-for='item in otherlist' @click="open(item)">Dasheng {{item.name}}</li>
           </ul>
         </div>
-        <div :class="['middle-panel', isnight ? 'switch':'']"></div>  <!-- switch 用于白天/黑夜背景切换 -->
+        <div :class="['middle-panel', isnight ? 'switch':'']">
+          <calendar-panel></calendar-panel>
+        </div>  <!-- switch 用于白天/黑夜背景切换 -->
         <div class="sidebar-right"></div>
       </div>     
     </div>
@@ -59,7 +61,7 @@
 </template>
 
 <script type="text/javascript">    
-//import LeftMenuPanel from "./components/index/leftmenu.vue";
+import Calendar from "./components/Calendar.vue";
 
 export default{
     name:'app',    //模块名称
@@ -164,7 +166,7 @@ export default{
     },
     watch:{},
     components:{
-        //'left-menu-panel':LeftMenuPanel,
+        'calendar-panel':Calendar,
     },
     // 生命周期钩子
     beforeCreate:function(){},
