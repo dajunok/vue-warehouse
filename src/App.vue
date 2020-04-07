@@ -47,10 +47,12 @@
               <li class="menu-term" tabindex="1" v-for='item in otherlist' @click="open(item)">Dasheng {{item.name}}</li>
           </ul>
         </div>
-        <div :class="['middle-panel', isnight ? 'switch':'']">
+        <!-- switch 用于白天/黑夜背景切换 -->
+        <div :class="['middle-panel', isnight ? 'switch':'']">  
+        </div>  
+        <div class="sidebar-right">
           <calendar-panel></calendar-panel>
-        </div>  <!-- switch 用于白天/黑夜背景切换 -->
-        <div class="sidebar-right"></div>
+        </div>
       </div>     
     </div>
     <!-- 存放页面底部内容 -->
@@ -382,7 +384,7 @@ export default{
       } 
     } 
     .middle-panel{  //中间面板
-      width: 65%;
+      width: 60%;
       height: 200px;
       background-color: Pink;
       float: left;
@@ -391,7 +393,7 @@ export default{
       background-color: Gray;
     }
     .sidebar-right{//右侧栏
-      width: 15%;
+      width: 20%;
       height: 200px;
       background-color: LightGreen;
       float: left;

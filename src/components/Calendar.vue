@@ -22,9 +22,11 @@
             <template v-for="date of daylist">
                 <li v-if="date.number==calendar.day" day :valid="date.valid" :current="calendar.isCurrent">{{date.number}}</li>
                 <li v-else :valid="date.valid" :current="calendar.isCurrent">{{date.number}}</li>
-            </template>
-            
+            </template>            
         </ul>
+    </div>
+    <div class="calendar-bottom">       
+        <button class="today" @click="goback()">返回今天</button>
     </div>
 </div>    
 
@@ -103,7 +105,12 @@ export default{
             this.calendar.weekday =weekday;
             this.calendar.isCurrent=false;
         },
-       
+        goback(){ //“返回到今天”按钮事件触发函数
+            var date = new Date();   //获取当天日期
+            var year=date.getFullYear();   //获取现年份
+            var month=date.getMonth();     //获取现月份
+            this.calculate(year,month);
+        },
     },
     watch:{},
     components:{},
@@ -195,7 +202,8 @@ export default{
 .calendar-wrap{    
     width: 300px;
     height: 300px;
-    margin: 5px 0 0 5px;
+    margin: 0 0 0 5px;
+    position: relative;
     padding: 3px 5px 0 5px;
     background-color: #f7f4e1; //#f7f4e1 
     box-sizing: border-box;  //元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制。
@@ -300,6 +308,30 @@ export default{
                 &[day]{
                     background-color: rgba(255, 165, 0, 1);
                 }
+            }
+        }
+    }
+    .calendar-bottom{
+        position: absolute;
+        bottom: 0px;
+        width: calc(100%-6px*2);  //其中5px是父元素的内边距，1px是父边框
+        height: 40px;
+        .today{
+            position:relative;
+            top:50%;
+            height: 70%;
+            line-height: 70%;
+            padding:5px;
+            transform: translateY(-50%);
+            float: right;
+            color: white;
+            background-color:#d974f2; 
+            text-align: center;
+            .border(@width:2px,@style:solid,@color:#d974f2,@radius:4px); //添加边框
+            &:hover{
+                cursor: pointer;
+                background-color: Purple;
+                .border(@width:2px,@style:solid,@color:Purple,@radius:4px); //添加边框
             }
         }
     }
