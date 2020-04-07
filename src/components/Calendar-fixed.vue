@@ -1,4 +1,5 @@
-<template>
+<template> 
+<!-- 注意：没有年月翻页功能的固定日历组件 --> 
 <div class="calendar-wrap">
     <div class="year-month">
         <div class="left">
@@ -19,9 +20,28 @@
     <div class="days-wrap">
         <ul class="days">
             <!-- 如果第1天不是星期日，则增加相应的空白日期占据位置，以便于日期与星期对齐 。例如，星期一增加1个空白日期用于占位-->
-            <template v-for="date of daylist">
-                <li v-if="date.number==calendr.day" day :valid="date.valid">{{date.number}}</li>
-                <li v-else :valid="date.valid">{{date.number}}</li>
+            <template v-if="calendr.weekday==1">
+                <li v-for="n of 1" blank></li>
+            </template>
+            <template v-else-if="calendr.weekday==2">
+                <li v-for="n of 2" blank></li>
+            </template>
+            <template v-else-if="calendr.weekday==3">
+                <li v-for="n of 3" blank></li>
+            </template>
+            <template v-else-if="calendr.weekday==4">
+                <li v-for="n of 4" blank></li>
+            </template>
+            <template v-else-if="calendr.weekday==5">
+                <li v-for="n of 5" blank></li>
+            </template>
+            <template v-else-if="calendr.weekday==6">
+                <li v-for="n of 6" blank></li>
+            </template>
+            <template v-else></template >
+            <template v-for="date of calendr.days">
+                <li v-if="date==calendr.day" day valid>{{date}}</li>
+                <li v-else valid>{{date}}</li>
             </template>
             
         </ul>
@@ -55,39 +75,7 @@ export default{
             tomorrow:'',    //明天
             aftertomorrow:'',  //后天            
         },
-        daylist:[
-            {number:'1',valid:true},
-            {number:'2',valid:true},
-            {number:'3',valid:true},
-            {number:'4',valid:true},
-            {number:'5',valid:true},
-            {number:'6',valid:true},
-            {number:'7',valid:true},
-            {number:'8',valid:true},
-            {number:'9',valid:true},
-            {number:'10',valid:true},
-            {number:'11',valid:true},
-            {number:'12',valid:true},
-            {number:'13',valid:true},
-            {number:'14',valid:true},
-            {number:'15',valid:true},
-            {number:'16',valid:true},
-            {number:'17',valid:true},
-            {number:'18',valid:true},
-            {number:'19',valid:true},
-            {number:'20',valid:true},
-            {number:'21',valid:true},
-            {number:'22',valid:true},
-            {number:'23',valid:true},
-            {number:'24',valid:true},
-            {number:'25',valid:true},
-            {number:'26',valid:true},
-            {number:'27',valid:true},
-            {number:'28',valid:true},
-            {number:'29',valid:true},
-            {number:'30',valid:true},
-            {number:'31',valid:true},
-        ],
+
       };      
     },
     computed:{
@@ -97,7 +85,7 @@ export default{
     },
     methods:{
         yearGrow(){ //递增年份
-            
+
         },
         yearReduce(){ //递减年份
 
@@ -123,18 +111,6 @@ export default{
         this.calendr.days = new Date(this.calendr.year, this.calendr.month + 1, 0).getDate();  //计算当前月份天数
         var firstDay = new Date(this.calendr.year, this.calendr.month, 1); //当前月的第一天的日期
         this.calendr.weekday = firstDay.getDay(); //当前第一天是星期几
-        if(this.calendr.weekday>0){  //如果第1天不是星期日，则增加相应的空白日期占据位置，以便于日期与星期对齐 。例如，星期一增加1个空白日期用于占位
-            for(var i = 0,len=this.calendr.weekday; i < len; i++) {                
-                this.daylist.unshift({number:'',valid:false});
-            }
-        }
-        if(this.calendr.days<31){
-            for(var i = 0,len=31-this.calendr.days; i < len; i++) {                
-                this.daylist.pop();
-            }
-            
-        }
-        console.log(this.daylist);
 
     },
     beforeMount:function(){},
