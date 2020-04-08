@@ -351,8 +351,8 @@ module.exports={
         //配置CopyWebpackPlugin插件：将单个文件或整个目录复制到生成目录（dist）。
         new CopyWebpackPlugin([
             {
-                from:__dirname+'/src/staticresources',
-                to:__dirname+'/dist/resources',
+                from:__dirname+'/src/static',
+                to:__dirname+'/dist/static',
                 toType: 'dir',
                 ignore: ['*.js','*.ejs']      //忽略.js和.ejs后缀的文件，注意构建生成所用文件不需要拷贝。
             },
