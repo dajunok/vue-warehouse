@@ -28,6 +28,9 @@
             </ul>
         </div>        
     </div> 
+    <div class="AD">
+      <adwheel-banner></adwheel-banner>  <!-- 广告轮播组件 -->
+    </div>
     <!-- 存放主体内容 -->  
     <div class="body">
       <div class="container">
@@ -49,6 +52,7 @@
         </div>
         <!-- switch 用于白天/黑夜背景切换 -->
         <div :class="['middle-panel', isnight ? 'switch':'']">  
+            
         </div>  
         <div class="sidebar-right">
           <calendar-panel></calendar-panel>
@@ -64,6 +68,7 @@
 
 <script type="text/javascript">    
 import Calendar from "./components/Calendar.vue";
+import Adwheel from "./components/Adwheel.vue";
 
 export default{
     name:'app',    //模块名称
@@ -169,6 +174,7 @@ export default{
     watch:{},
     components:{
         'calendar-panel':Calendar,
+        'adwheel-banner':Adwheel,
     },
     // 生命周期钩子
     beforeCreate:function(){},
