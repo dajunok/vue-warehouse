@@ -160,8 +160,7 @@ module.exports={
                     esModule: false,    //esModule指你的模块是否采用ES modules。如果你的JS采用的是CommonJS模块语法，则此处应该设置为false，否则图片不能正常显示。
                     limit: 10240,       // 小于10kb将会转换成base64
                     name: 'img/[name].[hash:8].[ext]',   // 大于10kb的资源输出地址，[name]是名字，[ext]后缀  
-                    fallback: 'file-loader',    // 大于10kb的资源采用file-loader加载器。file-loader是默认值可以不设置 
-                    //publicPath: '/web/'     
+                    fallback: 'file-loader',    // 大于10kb的资源采用file-loader加载器。file-loader是默认值可以不设置     
                 }
             },
             {   //url-loader加载器处理视频文件
@@ -172,7 +171,6 @@ module.exports={
                     limit: 10240,
                     name: 'media/[name].[hash:8].[ext]',
                     fallback: 'file-loader', // 大于10kb的资源采用file-loader加载器。file-loader是默认值可以不设置
-                    //publicPath: '/web/',
                 }
             },
             //配置html-loader：将HTML格式文件导出为字符串。当编译器需要时，可以对其进行压缩使HTML被最小化。
@@ -182,7 +180,7 @@ module.exports={
                     loader: 'html-loader',
                     options: {
                         // 标签+属性
-                        attrs: ['img:src', 'audio:src', 'video:src']
+                        attrs: ['img:src', 'audio:src', 'video:src'],
                     }
                   }
             },

@@ -1,17 +1,19 @@
 <!-- ======================================广告轮播组件============================ -->
 <template>
 <div class="banner-wrap">
-    <div class="pic_banner">
-        <a id="init_img"  href="#" target="_blank">
-            <img src="#" alt="保底图">
+<!--     <div class="pic_banner">
+        <a id="init_img"  href="#" target="_blank" style="display:none">
+            <img src="#" alt="保底图" height="340" width="1680">
         </a>
         <template v-for="imgInfo in imgInfoList">
-            <a :id="imgInfo.id"  :href="imgInfo.webaddress" target="_blank">
-                <img :src="imgInfo.imgaddress" :alt="imgInfo.id" :height="imgInfo.imgHeight" :width="imgInfo.imgWidth">
+            <a :id="imgInfo.id"  :href="imgInfo.webaddress" target="_top">
+                <img :src="imgInfo.imgaddress" :alt="imgInfo.id" :height="imgInfo.imgHeight" :width="screenWidth">
             </a>
         </template>
+    </div> -->
+    <div class="wrap" >
+        <!-- <img src="../assets/adwhell/ad01.jpg"></img> -->
     </div>
-    <p>屏宽度{{screenWidth}}</p>
 
 </div>   
 
@@ -27,17 +29,17 @@ export default{
     mixins:[],   //data数据合并混入
     data:function(){
       return { 
-        screenWidth: document.body.clientWidth,  //浏览器窗口宽度
+        screenWidth: document.documentElement.clientWidth,  //浏览器窗口宽度
         imgInfoList:[
-            {id:'img_01',webaddress:'#',imgaddress:'@/assets/adwhell/ad01',imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_02',webaddress:'#',imgaddress:'../assets/adwhell/ad01',imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_03',webaddress:'#',imgaddress:'../assets/adwhell/ad01',imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_04',webaddress:'#',imgaddress:'../assets/adwhell/ad01',imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_05',webaddress:'#',imgaddress:'../assets/adwhell/ad01',imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_06',webaddress:'#',imgaddress:'../assets/adwhell/ad01',imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_07',webaddress:'#',imgaddress:'../assets/adwhell/ad01',imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_08',webaddress:'#',imgaddress:'../assets/adwhell/ad01',imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_09',webaddress:'#',imgaddress:'../assets/adwhell/ad01',imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_01',webaddress:'#',imgaddress:require('../assets/adwhell/ad01.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_02',webaddress:'#',imgaddress:require('../assets/adwhell/ad02.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_03',webaddress:'#',imgaddress:require('../assets/adwhell/ad03.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_04',webaddress:'#',imgaddress:require('../assets/adwhell/ad04.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_05',webaddress:'#',imgaddress:require('../assets/adwhell/ad05.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_06',webaddress:'#',imgaddress:require('../assets/adwhell/ad06.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_07',webaddress:'#',imgaddress:require('../assets/adwhell/ad07.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_08',webaddress:'#',imgaddress:require('../assets/adwhell/ad08.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_09',webaddress:'#',imgaddress:require('../assets/adwhell/ad09.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
         ]
 
       }; 
@@ -90,5 +92,29 @@ export default{
 
 
 <style scoped lang="less" rel="stylesheet/less"> 
-  
+.banner-wrap{
+        .wrap{
+            // position: relative;
+            // width:1200px;
+            // height:340px;
+            // border: 2px solid red;
+            // img{
+            //     position: absolute;
+            //     max-width: 100%;
+            //     max-height: 100%;
+            //     top: 50%;
+            //     left: 50%;
+            //     transform: translate(-50%, -50%);      
+            // }
+            width: 500px;
+            height: 340px;
+            border: 2px solid red;
+            background-image:url('../assets/adwhell/ad01.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            
+        }
+
+}
 </style>
