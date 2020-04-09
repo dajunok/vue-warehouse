@@ -1,7 +1,7 @@
 <!-- ======================================广告轮播组件============================ -->
 <template>
-<div class="banner-wrap" :style="{width: screenWidth +'px'}">
-    <div class="pic_banner" :style="{width: screenWidth*imgInfoList.length +'px'}">
+<div class="banner-wrap"> <!-- :style="{width: screenWidth +'px'}" --> 
+    <div class="pic_banner" :style="{width: screenWidth*imgInfoList.length +'px',left:scrollbarInfo.bannerLeft+'px'}">
         <a id="init_img"  href="#" target="_blank" style="display:none">
             <img src="#" alt="保底图" height="340" width="1680">
         </a>
@@ -29,7 +29,7 @@ export default{
     data:function(){
       return { 
         imgaddress:'../assets/adwhell/ad02.jpg',
-        screenWidth: document.documentElement.clientWidth,  //浏览器窗口宽度
+        screenWidth: document.documentElement.clientWidth,  //浏览器窗口宽度   
         imgInfoList_1:[ //当元素采用背景图片时，直接使用绝对地址。但需要拷贝图片到dist目录
             {id:'img_01',webaddress:'#',imgaddress:'/web/static/ad01.jpg',imgWidth:this.screenWidth,imgHeight:'340'},
             {id:'img_02',webaddress:'#',imgaddress:'/web/static/ad02.jpg',imgWidth:this.screenWidth,imgHeight:'340'},
@@ -59,6 +59,7 @@ export default{
             imgLeft:[],     //每张图片在屏幕中显示时的left位置和图片URL地址
             nextLeft:0,    //左翻页，滚动栏左移一张图片位置，如果当前显示的是最后一张图片，则滚动栏不动。
             nextRight:0,    //右翻页，滚动栏右移一张图片位置，如果当前显示的是第一张图片，则滚动栏不动。
+            tmId:0,       //存储定时器的timerID
         },
       }; 
     },
@@ -72,6 +73,8 @@ export default{
                 this.screenWidth = val
                 this.timer = true;   //使用this声明变量，var是在当前作用域（scope）中声明一个变量，而this则是指向当前上下文（context）。作用域很好理解，在函数里面，作用域就是执行var语句的那个函数，否则就是root（window或者global）。 上下文是在函数调用的时候决定的
                 let that = this;
+                //浏览器窗口改变时，重新计算滚动栏
+                that.imgWidth=that.screenWidth;
                 if(that.scrollbarInfo.bannerLeft!=0){
                     that.scrollbarInfo.bannerLeft=-(that.screenWidth*that.scrollbarInfo.imgSeq);
                 }
@@ -87,16 +90,19 @@ export default{
                 if(that.scrollbarInfo.imgSeq>0){   //浏览器窗口改变时，重新计算左翻页位置 
                     that.scrollbarInfo.nextLeft=that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq-1].left-that.screenWidth;
                 }
-                if(that.scrollbarInfo.imgSeq>0  && that.scrollbarInfo.imgSeq<that.scrollbarInfo.imgCount){ //浏览器窗口改变时，重新计算右翻页位置。
+                if(that.scrollbarInfo.imgSeq>1  && that.scrollbarInfo.imgSeq<that.scrollbarInfo.imgCount){ //浏览器窗口改变时，重新计算右翻页位置。
                     that.scrollbarInfo.nextRight=that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq-1].left+that.screenWidth; 
                 }
+                console.log(that.screenWidth)
+                console.log(`imgLeft数组： ${JSON.stringify(that.scrollbarInfo.imgLeft)}`);
+                console.log(`scrollbarInfo： ${JSON.stringify(that.scrollbarInfo)}`);
                 setTimeout(function(){
                     // 打印screenWidth变化的值
-                    console.log(that.screenWidth)
-                    console.log(`imgLeft数组： ${JSON.stringify(that.scrollbarInfo.imgLeft)}`);
-                    console.log(`scrollbarInfo： ${JSON.stringify(that.scrollbarInfo)}`); 
+                    // console.log(that.screenWidth)
+                    // console.log(`imgLeft数组： ${JSON.stringify(that.scrollbarInfo.imgLeft)}`);
+                    // console.log(`scrollbarInfo： ${JSON.stringify(that.scrollbarInfo)}`); 
                     that.timer = false
-                },400)
+                },0)
             }
         }
     },
@@ -109,10 +115,13 @@ export default{
     mounted:function(){
         //=================j计算浏览器窗口宽度
         const that = this;
+        that.screenWidth=document.documentElement.clientWidth;
+        console.log('www'+that.screenWidth);
         window.onresize = () => {  //onresize：当调整窗口大小时运行脚本
             return (() => {
-                window.screenWidth = document.body.clientWidth
+                window.screenWidth =document.documentElement.clientWidth;  //document.documentElement.clientWidth;  document.body.clientWidth 
                 that.screenWidth = window.screenWidth
+                console.log('wwwwww'+that.screenWidth);
             })()
         }
         //================初始化图片滚动栏信息scrollbarInfo
@@ -131,13 +140,41 @@ export default{
         if(that.scrollbarInfo.imgSeq>0){     
             that.scrollbarInfo.nextLeft=that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq-1].left-that.screenWidth;
         }
-        if(that.scrollbarInfo.imgSeq>0  && that.scrollbarInfo.imgSeq<that.scrollbarInfo.imgCount){
+        if(that.scrollbarInfo.imgSeq>1  && that.scrollbarInfo.imgSeq<that.scrollbarInfo.imgCount){
             that.scrollbarInfo.nextRight=that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq-1].left+that.screenWidth; 
         }
-        
         console.log("imgLeft数组长度："+that.scrollbarInfo.imgLeft.length);
         console.log(`imgLeft数组： ${JSON.stringify(that.scrollbarInfo.imgLeft)}`); 
         console.log(`scrollbarInfo： ${JSON.stringify(that.scrollbarInfo)}`); 
+        
+        //===========================无限循环滚动(带滑动效果）
+        var pic_banner=document.querySelector("div.pic_banner");
+        var toleft=-that.screenWidth;
+        console.log("toleft："+toleft);
+        move(pic_banner,toleft);
+        console.log('调用函数move()bannerLeft:'+that.scrollbarInfo.bannerLeft);
+
+        
+        //=================定义滚动栏循环与图片移动函数
+        function move(elemt,toLeft){  //1263
+            window.clearInterval(elemt.timerID); //取消setInterval()方法设置的定时器
+            elemt.timerID=setInterval(function(){
+                console.log('调用函数move()后tmId:'+elemt.timerID);
+                let step=100;  //每次移动的距离
+                let current=that.scrollbarInfo.bannerLeft;  //存储滚动栏当前left属性值
+                let target=toLeft;  //保存滚动栏移动后值（向左或向右移动后的left属性值）
+                step=Math.abs(current)>target ? -step : step;  //通过比较current与target判断滚动栏要向左移动还是向右移动。
+                current+=step;
+                if(current+Math.abs(target)>Math.abs(step)){ //如果剩余间距大于每次要移动的间距,继续移动
+                    that.scrollbarInfo.bannerLeft=current;  
+                }else{
+                    window.clearInterval(elemt.timerID); //取消setInterval()方法设置的定时器
+                    that.scrollbarInfo.bannerLeft=target + "px";
+                }
+            },10);
+        }
+
+
     },
     beforeUpdate:function(){},
     updated:function(){},
@@ -164,7 +201,8 @@ export default{
         .pic_banner{
             height: 340px;
             overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/            
-            //min-width: 1000px;           
+            //min-width: 1000px; 
+            position: relative;   //     
             a{
                 position: relative;
                 display: block;
