@@ -153,7 +153,7 @@ export default{
         console.log("toleft："+toleft);
         move(pic_banner,toleft);
         console.log('调用函数move()bannerLeft:'+that.scrollbarInfo.bannerLeft);
-
+        
         
         //=================定义滚动栏循环与图片移动函数
         function move(elemt,toLeft){  //1263
@@ -169,10 +169,14 @@ export default{
                     that.scrollbarInfo.bannerLeft=current;  
                 }else{
                     window.clearInterval(elemt.timerID); //取消setInterval()方法设置的定时器
-                    that.scrollbarInfo.bannerLeft=target + "px";
+                    that.scrollbarInfo.bannerLeft=target;
                 }
             },10);
         }
+
+
+
+
 
 
     },
