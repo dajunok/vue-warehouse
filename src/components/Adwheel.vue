@@ -14,9 +14,9 @@
     </div>
     <div>
         <ul class="paging">
-            <li v-for="imgPlace of scrollbarInfo.imgLeft" @click="paging(imgPlace)">
-                <span class="caret">{{imgPlace.id}}</span>
-            </li>
+            <template v-for="imgPlace of scrollbarInfo.imgLeft">
+                <li @click="paging(imgPlace)" :current="imgPlace.isCurrent"></li>
+            </template>            
         </ul>
     </div>
 
@@ -57,7 +57,7 @@ export default{
             {id:'img_07',webaddress:'#',imgaddress:require('../assets/adwhell/ad07.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
             {id:'img_08',webaddress:'#',imgaddress:require('../assets/adwhell/ad08.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
             {id:'img_09',webaddress:'#',imgaddress:require('../assets/adwhell/ad09.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_01',webaddress:'#',imgaddress:require('../assets/adwhell/ad01.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_10',webaddress:'#',imgaddress:require('../assets/adwhell/ad01.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
         ],
         scrollbarInfo:{    //图片滚动栏信息
             bannerLeft:0,  //滚动栏当前left位置值（单位像素）
@@ -94,9 +94,10 @@ export default{
                     if(i>0){
                         leftsize=-(that.screenWidth*i)
                     }
-                    var img={id:'img_'+num,left:leftsize};
+                    var img={id:'img_'+num,left:leftsize,isCurrent:false};
                     that.scrollbarInfo.imgLeft[i]=img;  
                 }
+                that.scrollbarInfo.imgLeft[0].isCurrent=true; //第一张显示图片的分页按钮为选中状态背景图片。
                 if(that.scrollbarInfo.imgSeq>0){   //浏览器窗口改变时，重新计算左翻页位置 
                     that.scrollbarInfo.nextLeft=that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq-1].left-that.screenWidth;
                 }
@@ -143,9 +144,10 @@ export default{
             if(i>0){
                 leftsize=-(that.screenWidth*i)
             }
-            var img={id:'img_'+num,left:leftsize};
+            var img={id:'img_'+num,left:leftsize,isCurrent:false};
             that.scrollbarInfo.imgLeft[i]=img;  
         }
+        that.scrollbarInfo.imgLeft[0].isCurrent=true; //第一张显示图片的分页按钮为选中状态背景图片。
         if(that.scrollbarInfo.imgSeq>0){     
             that.scrollbarInfo.nextLeft=that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq-1].left-that.screenWidth;
         }
@@ -166,9 +168,13 @@ export default{
         function loopPlay(){
             if(that.scrollbarInfo.imgSeq>that.scrollbarInfo.imgCount){
                 that.scrollbarInfo.bannerLeft=0;   
-                that.scrollbarInfo.imgSeq=1;             
+                that.scrollbarInfo.imgSeq=1;  
+                that.scrollbarInfo.imgLeft[0].isCurrent=true;
+                that.scrollbarInfo.imgLeft[9].isCurrent=false;             
             }            
-            var gap=that.screenWidth*that.scrollbarInfo.imgSeq; //移到间距  
+            var gap=that.screenWidth*that.scrollbarInfo.imgSeq; //移到间距 
+            that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq-1].isCurrent=false;
+            that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq].isCurrent=true;  //修改当前显示图片的分页按钮的背景图片
             that.scrollbarInfo.imgSeq++;              
             that.scrollbarInfo.nextLeft-=that.screenWidth;
             that.scrollbarInfo.nextRight+=that.screenWidth; 
@@ -216,7 +222,11 @@ export default{
 
 
 <style scoped lang="less" rel="stylesheet/less"> 
-
+.bakimg(@url){ //定义背景图片mixin函数
+    background-image: @url;    
+    background-repeat:no-repeat;
+    background-size:cover;
+}
 
 .banner-wrap{
     position: relative;
@@ -246,11 +256,21 @@ export default{
         width:100%;
         height:30px;
         bottom:10px;
-        background-color:red;
         li{
             position: relative;
+            width: 20px;
+            height:20px;
+            margin-right: 20px;
             float:left;
+            top: 50%;
+            transform: translateY(-50%);
+            .bakimg(@url:url('../assets/adwhell/circle-solid.png')); //设置背景图片
             &:first-of-type{margin-left:50%;}
+            &[current=true]{
+                width: 25px;
+                height:25px;
+                .bakimg(@url:url('../assets/adwhell/rectangle-fillet2.png')); //设置背景图片
+            }
         }
     }        
 }
