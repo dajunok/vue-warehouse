@@ -12,7 +12,13 @@
             </a>
         </template>
     </div>
-
+    <div>
+        <ul class="paging">
+            <li v-for="imgPlace of scrollbarInfo.imgLeft" @click="paging(imgPlace)">
+                <span class="caret">{{imgPlace.id}}</span>
+            </li>
+        </ul>
+    </div>
 
 </div>   
 
@@ -64,7 +70,11 @@ export default{
       }; 
     },
     computed:{},
-    methods:{},
+    methods:{
+        paging(imgPlace){
+
+        }
+    },
     watch:{
         screenWidth(val){  //监控screenWidth（浏览器窗口）
             // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
@@ -209,30 +219,48 @@ export default{
 
 
 .banner-wrap{
-        position: relative;
+    position: relative;
+    height: 340px;
+    //min-width: 1000px;
+    overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/ 
+    .pic_banner{
         height: 340px;
-        //min-width: 1000px;
-        overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/ 
-        .pic_banner{
+        overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/            
+        //min-width: 1000px; 
+        position: relative;   //     
+        a{
+            position: relative;
+            display: block;
             height: 340px;
-            overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/            
-            //min-width: 1000px; 
-            position: relative;   //     
-            a{
-                position: relative;
-                display: block;
-                height: 340px;
-                float: left;                
-                img{
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                } 
-            }
-            
+            float: left;                
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            } 
         }
-
+        
+    }
+    .paging{
+        position:absolute;
+        width:100%;
+        height:30px;
+        bottom:10px;
+        background-color:red;
+        li{
+            position: relative;
+            float:left;
+            &:first-of-type{margin-left:50%;}
+        }
+    }        
 }
+
+
+
+
+
+
+
 /*创建动画
 animation: imgMove 400ms linear 1;  //linear infinite  此行css需放置具体选择器中。
 @keyframes imgMove {
