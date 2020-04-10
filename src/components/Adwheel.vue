@@ -51,6 +51,7 @@ export default{
             {id:'img_07',webaddress:'#',imgaddress:require('../assets/adwhell/ad07.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
             {id:'img_08',webaddress:'#',imgaddress:require('../assets/adwhell/ad08.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
             {id:'img_09',webaddress:'#',imgaddress:require('../assets/adwhell/ad09.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_01',webaddress:'#',imgaddress:require('../assets/adwhell/ad01.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
         ],
         scrollbarInfo:{    //图片滚动栏信息
             bannerLeft:0,  //滚动栏当前left位置值（单位像素）
@@ -59,7 +60,6 @@ export default{
             imgLeft:[],     //每张图片在屏幕中显示时的left位置和图片URL地址
             nextLeft:0,    //左翻页，滚动栏左移一张图片位置，如果当前显示的是最后一张图片，则滚动栏不动。
             nextRight:0,    //右翻页，滚动栏右移一张图片位置，如果当前显示的是第一张图片，则滚动栏不动。
-            tmId:0,       //存储定时器的timerID
         },
       }; 
     },
@@ -121,13 +121,12 @@ export default{
             return (() => {
                 window.screenWidth =document.documentElement.clientWidth;  //document.documentElement.clientWidth;  document.body.clientWidth 
                 that.screenWidth = window.screenWidth
-                console.log('wwwwww'+that.screenWidth);
             })()
         }
         //================初始化图片滚动栏信息scrollbarInfo
         that.scrollbarInfo.bannerLeft=0;
         that.scrollbarInfo.imgSeq=1;
-        that.scrollbarInfo.imgCount=that.imgInfoList.length;
+        that.scrollbarInfo.imgCount=that.imgInfoList.length-1;
         for(var i=0,len=that.imgInfoList.length;i<len;i++){
             var num=i+1;
             var leftsize=0;
@@ -147,28 +146,40 @@ export default{
         console.log(`imgLeft数组： ${JSON.stringify(that.scrollbarInfo.imgLeft)}`); 
         console.log(`scrollbarInfo： ${JSON.stringify(that.scrollbarInfo)}`); 
         
-        //===========================无限循环滚动(带滑动效果）
-        var pic_banner=document.querySelector("div.pic_banner");
-        var toleft=-that.screenWidth;
-        console.log("toleft："+toleft);
-        move(pic_banner,toleft);
-        console.log('调用函数move()bannerLeft:'+that.scrollbarInfo.bannerLeft);
-        
+        //===========================无限循环滚动(带滑动效果）========================================== 
+        var timerId;
+        window.clearInterval(timerId);
+        timerId=setInterval(loopPlay,5000);
         
         //=================定义滚动栏循环与图片移动函数
-        function move(elemt,toLeft){  //1263
-            window.clearInterval(elemt.timerID); //取消setInterval()方法设置的定时器
-            elemt.timerID=setInterval(function(){
-                console.log('调用函数move()后tmId:'+elemt.timerID);
+        //循环轮播函数
+        function loopPlay(){
+            if(that.scrollbarInfo.imgSeq>that.scrollbarInfo.imgCount){
+                that.scrollbarInfo.bannerLeft=0;   
+                that.scrollbarInfo.imgSeq=1;             
+            }            
+            var gap=that.screenWidth*that.scrollbarInfo.imgSeq; //移到间距  
+            that.scrollbarInfo.imgSeq++;              
+            that.scrollbarInfo.nextLeft-=that.screenWidth;
+            that.scrollbarInfo.nextRight+=that.screenWidth; 
+            move(that.scrollbarInfo,-gap);
+
+        }
+
+        //==图片移动函数(带滑动效果)
+        function move(obj,toLeft){                  //obj参数可以是任何一个js对象，函数运行时会在该对象中添加一个timerID的属性用于临时存放定时器ID。toLeft参数是要移到目的位置值。
+            window.clearInterval(obj.timerID);      //取消setInterval()方法设置的定时器
+            obj.timerID=setInterval(function(){     //obj.timerID用于存放定时器ID
+                //console.log(`obj： ${JSON.stringify(obj)}`); 
                 let step=100;  //每次移动的距离
                 let current=that.scrollbarInfo.bannerLeft;  //存储滚动栏当前left属性值
                 let target=toLeft;  //保存滚动栏移动后值（向左或向右移动后的left属性值）
                 step=Math.abs(current)>target ? -step : step;  //通过比较current与target判断滚动栏要向左移动还是向右移动。
                 current+=step;
-                if(current+Math.abs(target)>Math.abs(step)){ //如果剩余间距大于每次要移动的间距,继续移动
+                if(Math.abs(current-target)>Math.abs(step)){ //如果剩余间距大于每次要移动的间距,继续移动
                     that.scrollbarInfo.bannerLeft=current;  
                 }else{
-                    window.clearInterval(elemt.timerID); //取消setInterval()方法设置的定时器
+                    window.clearInterval(obj.timerID); //取消setInterval()方法设置的定时器
                     that.scrollbarInfo.bannerLeft=target;
                 }
             },10);
