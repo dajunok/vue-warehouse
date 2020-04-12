@@ -68,7 +68,7 @@
 
 <script type="text/javascript">    
 import Calendar from "./components/Calendar.vue";
-import Adwheel from "./components/Adwheel.vue";
+import Adwheel from "./components/Adwheel-right.vue";
 
 export default{
     name:'app',    //模块名称

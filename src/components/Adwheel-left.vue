@@ -1,4 +1,4 @@
-<!-- ======================================广告轮播组件============================ -->
+<!-- ======================================广告轮播组件（向左滑动）============================ -->
 <template>
 <div class="banner-wrap"> <!-- :style="{width: screenWidth +'px'}" --> 
     <div class="pic_banner" :style="{width: screenWidth*imgInfoList.length +'px',left:scrollbarInfo.bannerLeft+'px'}">
@@ -15,7 +15,9 @@
     <div>
         <ul class="paging">
             <template v-for="imgPlace of scrollbarInfo.imgLeft">
-                <li @click="paging(imgPlace)" :current="imgPlace.isCurrent"></li>
+                <li v-if="imgPlace.id=='1'" :first="hidefirstpaging" @click="paging(imgPlace)" :current="imgPlace.isCurrent"></li>
+                <li v-else-if="imgPlace.id==scrollbarInfo.imgLeft.length" :last="hidelastpaging" @click="paging(imgPlace)" :current="imgPlace.isCurrent"></li>
+                <li v-else @click="paging(imgPlace)" :current="imgPlace.isCurrent"></li>
             </template>            
         </ul>
     </div>
@@ -33,8 +35,9 @@ export default{
     model: {},
     mixins:[],   //data数据合并混入
     data:function(){
-      return { 
-        imgaddress:'../assets/adwhell/ad02.jpg',
+      return {
+        hidefirstpaging:'0',    //当true时，隐藏第一个分页按钮
+        hidelastpaging:'1',      //隐藏最后一个分页按钮
         screenWidth: document.documentElement.clientWidth,  //浏览器窗口宽度   
         imgInfoList_1:[ //当元素采用背景图片时，直接使用绝对地址。但需要拷贝图片到dist目录
             {id:'img_01',webaddress:'#',imgaddress:'/web/static/ad01.jpg',imgWidth:this.screenWidth,imgHeight:'340'},
@@ -56,23 +59,31 @@ export default{
             {id:'img_06',webaddress:'#',imgaddress:require('../assets/adwhell/ad06.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
             {id:'img_07',webaddress:'#',imgaddress:require('../assets/adwhell/ad07.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
             {id:'img_08',webaddress:'#',imgaddress:require('../assets/adwhell/ad08.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
-            {id:'img_09',webaddress:'#',imgaddress:require('../assets/adwhell/ad09.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
+            {id:'img_09',webaddress:'#',imgaddress:require('../assets/adwhell/ad09.png'),imgWidth:this.screenWidth,imgHeight:'340'},
             {id:'img_10',webaddress:'#',imgaddress:require('../assets/adwhell/ad01.jpg'),imgWidth:this.screenWidth,imgHeight:'340'},
         ],
         scrollbarInfo:{    //图片滚动栏信息
             bannerLeft:0,  //滚动栏当前left位置值（单位像素）
-            imgSeq:1,    //当前屏幕显示图片的序号
+            imgSeq:1,       //当前屏幕显示图片的序号
             imgCount:0,     //滚动栏中的图片总数量
             imgLeft:[],     //每张图片在屏幕中显示时的left位置和图片URL地址
             nextLeft:0,    //左翻页，滚动栏左移一张图片位置，如果当前显示的是最后一张图片，则滚动栏不动。
             nextRight:0,    //右翻页，滚动栏右移一张图片位置，如果当前显示的是第一张图片，则滚动栏不动。
         },
+        loopPtimer:{}, //该对象用于临时创建和临时存放轮播定时器ID。
+        loopPlay:{},
       }; 
     },
     computed:{},
     methods:{
-        paging(imgPlace){
-
+        paging(imgPlace){  //点击分页按钮切换图片
+            this.scrollbarInfo.bannerLeft=imgPlace.left;
+            this.scrollbarInfo.imgLeft[this.scrollbarInfo.imgSeq-1].isCurrent=false; //把切换前的当前屏幕显示图片的状态改为false
+            this.scrollbarInfo.imgSeq=imgPlace.id; //切换当前显示图片的序号
+            this.scrollbarInfo.imgLeft[this.scrollbarInfo.imgSeq-1].isCurrent=true;  //把切换后的当前屏幕显示图片的状态改为true，这样就完成了图片切换。
+            var that=this;
+            window.clearInterval(that.loopPtimer.timerId);  //停止循环滚动（防止影响分页按钮滑动）
+            that.loopPtimer.timerId=setInterval(that.loopPlay,3000);      //重启循环滚动，它将延时5000毫秒（不是10毫秒哦！！）
         }
     },
     watch:{
@@ -94,7 +105,7 @@ export default{
                     if(i>0){
                         leftsize=-(that.screenWidth*i)
                     }
-                    var img={id:'img_'+num,left:leftsize,isCurrent:false};
+                    var img={id:num,left:leftsize,isCurrent:false};
                     that.scrollbarInfo.imgLeft[i]=img;  
                 }
                 that.scrollbarInfo.imgLeft[0].isCurrent=true; //第一张显示图片的分页按钮为选中状态背景图片。
@@ -144,7 +155,7 @@ export default{
             if(i>0){
                 leftsize=-(that.screenWidth*i)
             }
-            var img={id:'img_'+num,left:leftsize,isCurrent:false};
+            var img={id:num,left:leftsize,isCurrent:false};
             that.scrollbarInfo.imgLeft[i]=img;  
         }
         that.scrollbarInfo.imgLeft[0].isCurrent=true; //第一张显示图片的分页按钮为选中状态背景图片。
@@ -159,20 +170,37 @@ export default{
         console.log(`scrollbarInfo： ${JSON.stringify(that.scrollbarInfo)}`); 
         
         //===========================无限循环滚动(带滑动效果）========================================== 
-        var timerId;
-        window.clearInterval(timerId);
-        timerId=setInterval(loopPlay,5000);
+        that.loopPlay=loopPlay;
+        window.clearInterval(this.loopPtimer.timerId);
+        this.loopPtimer.timerId=setInterval(that.loopPlay,3000);
+        //当离开页面时，停止图片滚动
+        var visProp = getHiddenProp();
+        if (visProp) {
+            var evtname = visProp.replace(/[H|h]idden/, '') + 'visibilitychange';
+            document.addEventListener(evtname, function () {
+                var stat= document[getVisibilityState()];
+                //alert(stat);
+                if(stat=='hidden'){
+                    window.clearInterval(that.loopPtimer.timerId);
+                }else if(stat=='visible'){
+                    that.loopPtimer.timerId=setInterval(loopPlay,3000);
+                }
+            },false);
+        }
         
         //=================定义滚动栏循环与图片移动函数
         //循环轮播函数
         function loopPlay(){
             if(that.scrollbarInfo.imgSeq>that.scrollbarInfo.imgCount){
                 that.scrollbarInfo.bannerLeft=0;   
-                that.scrollbarInfo.imgSeq=1;  
-                that.scrollbarInfo.imgLeft[0].isCurrent=true;
-                that.scrollbarInfo.imgLeft[9].isCurrent=false;             
-            }            
+                that.scrollbarInfo.imgSeq=1;              
+            }
+            that.hidefirstpaging='1';   
+            that.hidelastpaging='0';                      
             var gap=that.screenWidth*that.scrollbarInfo.imgSeq; //移到间距 
+            if(that.scrollbarInfo.imgSeq==1){
+               that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgCount].isCurrent=false; 
+            }
             that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq-1].isCurrent=false;
             that.scrollbarInfo.imgLeft[that.scrollbarInfo.imgSeq].isCurrent=true;  //修改当前显示图片的分页按钮的背景图片
             that.scrollbarInfo.imgSeq++;              
@@ -201,7 +229,40 @@ export default{
             },10);
         }
 
-
+        //----------------------下面是页面是否可见监听事件相关函数
+        //获取document.hidden属性：
+        function getHiddenProp(){
+            var prefixes = ['webkit','moz','ms','o'];
+            
+            // if 'hidden' is natively supported just return it
+            if ('hidden' in document) return 'hidden';
+            
+            // otherwise loop over all the known prefixes until we find one
+            for (var i = 0; i < prefixes.length; i++){
+                if ((prefixes[i] + 'Hidden') in document) 
+                    return prefixes[i] + 'Hidden';
+            }
+         
+            // otherwise it's not supported
+            return null;
+        }
+        //获取document.visibilityState属性：
+        function getVisibilityState() {
+            var prefixes = ['webkit', 'moz', 'ms', 'o'];
+            if ('visibilityState' in document) return 'visibilityState';
+            for (var i = 0; i < prefixes.length; i++) {
+                if ((prefixes[i] + 'VisibilityState') in document)
+                    return prefixes[i] + 'VisibilityState';
+            }
+            // otherwise it's not supported
+            return null;
+        }
+        //跨浏览器函数，检查文档是否可见。
+        function isHidden(){
+            var prop = getHiddenProp();
+            if (!prop) return false;    
+            return document[prop];
+        }
 
 
 
@@ -233,6 +294,7 @@ export default{
     height: 340px;
     //min-width: 1000px;
     overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/ 
+    //white-space:nowrap;    //解决窗口变小时导航菜单列表换行问题 
     .pic_banner{
         height: 340px;
         overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/            
@@ -253,9 +315,13 @@ export default{
     }
     .paging{
         position:absolute;
-        width:100%;
+        width:350px;
         height:30px;
+        left:70%;
+        @media screen and (min-width:1440px) and (max-width: 1680px){left:75%}  //如果屏宽度大于等于1440像素且小于等于1680像素
+        @media screen and (min-width:0px) and (max-width: 1100px){left:30%}  //如果屏宽度大于等于1440像素且小于等于1680像素
         bottom:10px;
+        white-space:nowrap;    //解决窗口变小时导航菜单列表换行问题 
         li{
             position: relative;
             width: 20px;
@@ -265,7 +331,10 @@ export default{
             top: 50%;
             transform: translateY(-50%);
             .bakimg(@url:url('../assets/adwhell/circle-solid.png')); //设置背景图片
-            &:first-of-type{margin-left:50%;}
+            &:hover{cursor: pointer;}
+            &[first='1']{display: none;}
+            &[last='1']{display: none;}
+            &[last='0']{position: absolute;left:-40px;}
             &[current=true]{
                 width: 25px;
                 height:25px;
