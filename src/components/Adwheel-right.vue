@@ -87,7 +87,7 @@ export default{
             this.scrollbarInfo.imgPosition[this.scrollbarInfo.imgSeq].isCurrent=true;  //把切换后的当前屏幕显示图片的状态改为true，这样就完成了图片切换。
             var that=this;
             window.clearInterval(that.loopPtimer.timerId);  //停止循环滚动（防止影响分页按钮滑动）
-            that.loopPtimer.timerId=setInterval(that.loopPlay,3000);      //重启循环滚动，它将延时5000毫秒（不是10毫秒哦！！）
+            that.loopPtimer.timerId=setInterval(that.loopPlay,3000);      //重启循环滚动，它将延时3000毫秒（不是10毫秒哦！！）
         }
     },
     watch:{
@@ -105,8 +105,8 @@ export default{
                     var position={id:i,left:leftlen,isCurrent:false};
                     that.scrollbarInfo.imgPosition[i]=position;  
                 }
+                that.scrollbarInfo.bannerLeft=-that.screenWidth*(that.scrollbarInfo.imgPosition.length-that.scrollbarInfo.imgSeq-1);
                 console.log(`imgPosition数组重新计算： ${JSON.stringify(that.scrollbarInfo.imgPosition)}`);    
-                //that.scrollbarInfo.bannerLeft=that.scrollbarInfo.imgPosition[0].left;
                 setTimeout(function(){
                     // 打印screenWidth变化的值
                     // console.log(that.screenWidth)
@@ -132,7 +132,7 @@ export default{
             return (() => {
                 window.screenWidth =document.documentElement.clientWidth;  //document.documentElement.clientWidth;  document.body.clientWidth 
                 that.screenWidth = window.screenWidth
-            })()
+            })()            
         }
         //================初始化图片滚动栏信息scrollbarInfo        
         for(var i=0,len=that.imgInfoList.length,num=len;i<len;i++){
@@ -142,7 +142,7 @@ export default{
             that.scrollbarInfo.imgPosition[i]=position;  
         }
         console.log(`imgPosition数组： ${JSON.stringify(that.scrollbarInfo.imgPosition)}`);    
-        that.scrollbarInfo.bannerLeft=that.scrollbarInfo.imgPosition[0].left;
+        that.scrollbarInfo.bannerLeft=-that.screenWidth*(that.scrollbarInfo.imgPosition.length-1);
         that.scrollbarInfo.imgPosition[0].isCurrent=true;
 
          
@@ -170,7 +170,7 @@ export default{
         //循环轮播函数
         function loopPlay(){
             if(that.scrollbarInfo.imgSeq==that.scrollbarInfo.imgPosition.length-1){
-                that.scrollbarInfo.bannerLeft=that.scrollbarInfo.imgPosition[0].left;
+                that.scrollbarInfo.bannerLeft=-that.screenWidth*(that.scrollbarInfo.imgPosition.length-1);
                 that.scrollbarInfo.imgSeq=0;
                 that.scrollbarInfo.imgPosition[that.scrollbarInfo.imgPosition.length-1].isCurrent=false;
             }
@@ -179,7 +179,7 @@ export default{
             that.scrollbarInfo.imgPosition[that.scrollbarInfo.imgSeq].isCurrent=false;
             that.scrollbarInfo.imgSeq++
             that.scrollbarInfo.imgPosition[that.scrollbarInfo.imgSeq].isCurrent=true;
-            var gap=that.scrollbarInfo.imgPosition[that.scrollbarInfo.imgSeq].left; //移到间距 
+            var gap=-that.screenWidth*(that.scrollbarInfo.imgPosition.length-that.scrollbarInfo.imgSeq-1); //移到间距 
             move(that.scrollbarInfo,gap);
 
         }
@@ -270,8 +270,7 @@ export default{
     overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/ 
     .pic_banner{
         height: 340px;
-        overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/            
-        //min-width: 1000px; 
+        overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/   
         position: relative;   //            
         a{
             position: relative;

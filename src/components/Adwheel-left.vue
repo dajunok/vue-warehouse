@@ -294,12 +294,10 @@ export default{
     height: 340px;
     //min-width: 1000px;
     overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/ 
-    //white-space:nowrap;    //解决窗口变小时导航菜单列表换行问题 
     .pic_banner{
         height: 340px;
-        overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/            
-        //min-width: 1000px; 
-        position: relative;   //     
+        overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/   
+        position: relative;   //            
         a{
             position: relative;
             display: block;
@@ -315,13 +313,14 @@ export default{
     }
     .paging{
         position:absolute;
-        width:350px;
+        width:400px;
         height:30px;
         left:70%;
         @media screen and (min-width:1440px) and (max-width: 1680px){left:75%}  //如果屏宽度大于等于1440像素且小于等于1680像素
         @media screen and (min-width:0px) and (max-width: 1100px){left:30%}  //如果屏宽度大于等于1440像素且小于等于1680像素
         bottom:10px;
-        white-space:nowrap;    //解决窗口变小时导航菜单列表换行问题 
+        white-space:nowrap; 
+        //background-color: blue;
         li{
             position: relative;
             width: 20px;
