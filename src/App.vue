@@ -52,7 +52,19 @@
         </div>
         <!-- switch 用于白天/黑夜背景切换 -->
         <div :class="['middle-panel', isnight ? 'switch':'']">  
-            
+          <h2>Dasheng <i>表格</i></h2>
+          <!-- <p>Dasheng 提供了一个清晰的创建表格的布局。下表列出了 Dasheng 支持的一些表格元素：</p> -->
+          <table>
+            <caption>Dasheng 提供了一个清晰的创建表格的布局。下表列出了 Dasheng 支持的一些表格元素：</caption>
+            <tr>
+              <th>标签</th>
+              <th>描述</th>              
+            </tr>
+            <tr v-for="data of dsTable">
+              <td>{{data.tag}}</td>
+              <td>{{data.describe}}</td>
+            </tr>
+          </table>   
         </div>  
         <div class="sidebar-right">
           <calendar-panel></calendar-panel>
@@ -153,6 +165,16 @@ export default{
         //白天夜间页面颜色切换
         isnight:false,  
         model:'夜间模式',  //鼠标移入时提示信息
+        //表格数据内容
+        dsTable:[
+          {tag:'<table>',describe:"为表格添加基础样式。"},
+          {tag:'<thead>',describe:"表格标题行的容器元素（<tr>），用来标识表格列。"},
+          {tag:'<tbody>',describe:"表格主体中的表格行的容器元素（<tr>）。"},
+          {tag:'<tr>',describe:"一组出现在单行上的表格单元格的容器元素（<td> 或 <th>）。"},
+          {tag:'<td>',describe:"默认的表格单元格。"},
+          {tag:'<th>',describe:"特殊的表格单元格，用来标识列或行（取决于范围和位置）。必须在 <thead> 内使用。"},
+          {tag:'<caption>',describe:"关于表格存储内容的描述或总结。"}
+        ]
       }; 
     },
     computed:{    
