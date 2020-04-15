@@ -290,13 +290,13 @@ export default{
 }
 
 .banner-wrap{
-    position: absolute;
+    position: relative;
     height: 340px;
     //min-width: 1000px;
     overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/ 
     .pic_banner{
         height: 340px;
-        overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/ 
+        overflow-x:hidden;      /*隐藏多余内容，避免显示滚动条overflow: hidden;*/   
         position: relative;   //            
         a{
             position: relative;

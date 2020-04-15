@@ -60,7 +60,7 @@
               <th>标签</th>
               <th>描述</th>              
             </tr>
-            <tr v-for="data of dsTable">
+            <tr class="datarow" v-for="data of dsTable">
               <td>{{data.tag}}</td>
               <td>{{data.describe}}</td>
             </tr>
@@ -80,7 +80,7 @@
 
 <script type="text/javascript">    
 import Calendar from "./components/Calendar.vue";
-import Adwheel from "./components/Adwheel-left.vue";
+import Adwheel from "./components/Adwheel.vue";
 
 export default{
     name:'app',    //模块名称
@@ -431,13 +431,16 @@ export default{
               .border(@width:1px,@style:solid,@color:Gold,@radius:0);  //定义边框mixin函数
             }
         }
-        tr{
+        .datarow{
           td{
             height:40px;
             padding-left:5px;
             .border(@width:1px,@style:solid,@color:Gold,@radius:0);  //定义边框mixin函数
           }
         }
+        .datarow:nth-child(even){  //odd是奇数；even是偶数
+          background-color:#f7f4e1; 
+        }        
       }
     }
     .switch{  //白天夜间背景颜色切换
