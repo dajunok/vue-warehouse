@@ -54,9 +54,9 @@
         <div :class="['middle-panel', isnight ? 'switch':'']">  
           <h2>Dasheng <i>表格</i></h2>
           <!-- <p>Dasheng 提供了一个清晰的创建表格的布局。下表列出了 Dasheng 支持的一些表格元素：</p> -->
-          <table>
+          <table class="tableone">
             <caption>Dasheng 提供了一个清晰的创建表格的布局。下表列出了 Dasheng 支持的一些表格元素：</caption>
-            <tr>
+            <tr class="head">
               <th>标签</th>
               <th>描述</th>              
             </tr>
@@ -414,8 +414,31 @@ export default{
     .middle-panel{  //中间面板
       width: 60%;
       height: 200px;
-      background-color: Pink;
+      //background-color: Pink;
       float: left;
+      .tableone{
+        width:100%;
+        .border(@width:1px,@style:solid,@color:Gold,@radius:0);  //定义边框mixin函数
+        //background-color:#d974f2;
+        caption{
+          text-align:left;
+        }
+        .head{
+            height:25px;
+            color:white;
+            background-color:#d974f2;  //#d974f2
+            th{
+              .border(@width:1px,@style:solid,@color:Gold,@radius:0);  //定义边框mixin函数
+            }
+        }
+        tr{
+          td{
+            height:40px;
+            padding-left:5px;
+            .border(@width:1px,@style:solid,@color:Gold,@radius:0);  //定义边框mixin函数
+          }
+        }
+      }
     }
     .switch{  //白天夜间背景颜色切换
       background-color: Gray;
