@@ -24,6 +24,29 @@
       </resource>
     </resources>
     <outputDirectory>dist/main/webapp/WEB-INF/classes</outputDirectory>
+
+    <!-- 插件列表 -->
+    <plugins>
+      <!-- 指定war包打包路径 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <outputDirectory>dist/war</outputDirectory>
+          <webappDirectory>dist/main/webapp</webappDirectory>
+        </configuration> 
+      </plugin>
+      <!-- 指定jar包打包路径 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <outputDirectory>dist/jar</outputDirectory>
+          <!-- 不打入jar包的文件类型或者路径 -->
+          <excludes></excludes>
+        </configuration> 
+      </plugin>
+    </plugins>
   </build>
 
   <dependencies>
