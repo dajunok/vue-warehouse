@@ -24,7 +24,6 @@
       </resource>
     </resources>
     <outputDirectory>dist/WEB-INF/classes</outputDirectory>
-
     <!-- 插件列表 -->
     <plugins>
       <!-- 指定war包打包输出路径 -->
