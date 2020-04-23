@@ -192,7 +192,7 @@ export default{
         }else{
           this.isnight=false;
           this.model='夜间模式';
-        }        
+        }     
       },
     },
     watch:{},
@@ -203,12 +203,15 @@ export default{
     // 生命周期钩子
     beforeCreate:function(){},
     created:function(){
-      this.$axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => (this.info = response))
+      let that=this;
+      that.$axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .then(response => {
+        that.info = response.data.bpi;
+        console.log(`App AXIOS数据： ${JSON.stringify(that.info)}`);
+      })
       .catch(function (error) { // 请求失败处理
         console.log("错误："+error);
-      });
-      console.log("App AXIOS数据："+this.info);
+      });      
     },
     beforeMount:function(){},
     mounted:function(){},
