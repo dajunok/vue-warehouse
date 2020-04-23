@@ -174,7 +174,9 @@ export default{
           {tag:'<td>',describe:"默认的表格单元格。"},
           {tag:'<th>',describe:"特殊的表格单元格，用来标识列或行（取决于范围和位置）。必须在 <thead> 内使用。"},
           {tag:'<caption>',describe:"关于表格存储内容的描述或总结。"}
-        ]
+        ],
+        //测试axios
+        info:null,
       }; 
     },
     computed:{    
@@ -200,7 +202,14 @@ export default{
     },
     // 生命周期钩子
     beforeCreate:function(){},
-    created:function(){},
+    created:function(){
+      this.$axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .then(response => (this.info = response))
+      .catch(function (error) { // 请求失败处理
+        console.log("错误："+error);
+      });
+      console.log("App AXIOS数据："+this.info);
+    },
     beforeMount:function(){},
     mounted:function(){},
     beforeUpdate:function(){},
@@ -219,7 +228,8 @@ export default{
 
 @import (reference) "./style/color.less";     //常用颜色
 @import (reference) "./style/triangle.less";  //三角符号
-@import (less) "./style/sidebarleft.less";    
+@import (less) "./style/sidebarleft.less";  
+
 
 .font(@size,@bold,@lh){  //定义字体mixin函数
     font-style:normal;

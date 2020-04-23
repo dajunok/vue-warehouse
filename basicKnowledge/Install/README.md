@@ -39,6 +39,9 @@ npm install --save-dev preload-webpack-plugin@next    //^3.0.0-beta.4
 npm install bootstrap@3
 npm install jquery
 
+-----------------安装axios
+npm install axios --save
+
 
 //////////////////////案例
 "devDependencies": {
