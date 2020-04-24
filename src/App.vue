@@ -64,7 +64,10 @@
               <td>{{data.tag}}</td>
               <td>{{data.describe}}</td>
             </tr>
-          </table>   
+          </table> 
+          <!-- 使用 axios 来完成 ajax 请求。 -->
+          <h2>Ajax之HTTP请求</h2>
+          <axios-component></axios-component>  
         </div>  
         <div class="sidebar-right">
           <calendar-panel></calendar-panel>
@@ -81,6 +84,7 @@
 <script type="text/javascript">    
 import Calendar from "./components/Calendar.vue";
 import Adwheel from "./components/Adwheel.vue";
+import AxiosDemo from "./components/AxiosDemo.vue";
 
 export default{
     name:'app',    //模块名称
@@ -199,20 +203,11 @@ export default{
     components:{
         'calendar-panel':Calendar,
         'adwheel-banner':Adwheel,
+        'axios-component':AxiosDemo,
     },
     // 生命周期钩子
     beforeCreate:function(){},
-    created:function(){
-      let that=this;
-      that.$axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => {
-        that.info = response.data.bpi;
-        console.log(`App AXIOS数据： ${JSON.stringify(that.info)}`);
-      })
-      .catch(function (error) { // 请求失败处理
-        console.log("错误："+error);
-      });      
-    },
+    created:function(){},
     beforeMount:function(){},
     mounted:function(){},
     beforeUpdate:function(){},

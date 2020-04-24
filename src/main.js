@@ -5,8 +5,13 @@ import store from './store'
 import "@/style/cleanstyle.css"
 import axios from "axios";
 
-
 Vue.prototype.$axios = axios;
+
+import VueResource from 'vue-resource';
+Vue.use(VueResource);
+
+
+
 
 new Vue({
   router,       //挂载将路由器到根元素'#app'下，挂载后就可以在'#app'对应的元素下通过<router-link>标签使用了。
