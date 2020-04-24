@@ -376,6 +376,11 @@ module.exports={
                 to:__dirname+'/dist/WEB-INF/web.xml', 
                 toType: 'file',           
             },
+            {
+                from:__dirname+'/src/background/lib',
+                to:__dirname+'/dist/WEB-INF/lib',
+                toType: 'dir',
+            },
 
         ]),
         //new InlineManifestWebpackPlugin('vendor01'),   // 将运行代码直接插入html文件中，因为这段代码非常少且时常改动，这样做可以避免一次请求的开销

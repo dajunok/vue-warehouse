@@ -41,6 +41,7 @@ npm install jquery
 
 -----------------安装axios
 npm install axios --save
+npm install vue-resource --save-dev
 
 
 //////////////////////案例
